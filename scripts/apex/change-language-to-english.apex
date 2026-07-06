@@ -3,11 +3,11 @@
 /**
  * Use .apex files to store anonymous Apex.
  *
- * You can execute anonymous Apex in VS Code by selecting the apex text and running the command:
+ * You can execute anonymous Apex in VS Code by selecting the apex text, right clicking, and running the command:
  * SFDX: Execute Anonymous Apex with Currently Selected Text
  *
  * You can also execute the entire file by running the command:
- * SFDX: Execute Anonymous Apex with Editor Contents
+ * SFDX: Execute Anonymous Apex with Currently Open Editor
  */
 
 User u = [SELECT Id FROM User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
