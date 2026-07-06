@@ -1,6 +1,17 @@
 # salesforce-bread-demo
 Salesforce demo for custom objects
 
+House keeping:
+1. `"language": "en_US"` in `config/project-scratch-def.json` will create a scratch org in English
+2. If you need to change the org default language to English run the Anonymous Apex script at `scripts/apex/change-language-to-english.apex`
+
+Setup:
+1. >SFDX Push Source to Default Org
+2. Assign the Bread Admin Permission Set to your System Admin user
+1. Use the Data Import Wizard to map and import Bread records from `scripts/data/Bread.csv`
+2. Run the Anonymous Apex script at `scripts/apex/add-bread-record-image.apex` to add images of breads
+3. 
+
 # Salesforce DX Project
 
 Salesforce DX is a development approach that brings source-driven development, team collaboration, and continuous integration to the Salesforce Platform. Instead of working directly in an org through a web browser, you work with metadata as source files in a local DX project, track changes in version control, and deploy through automated processes.
