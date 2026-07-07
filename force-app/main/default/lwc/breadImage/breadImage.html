@@ -1,0 +1,10 @@
+<template>
+  <div lwc:if={doneLoading} class="slds-scrollable_none bread-image">
+    <template lwc:if={hasImage}>
+      <img src={downloadUrl} alt={breadName} class="slds-image" />
+    </template>
+    <template lwc:else>
+      <p>No image available.</p>
+    </template>
+  </div>
+</template>
