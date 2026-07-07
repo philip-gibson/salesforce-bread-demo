@@ -1,0 +1,5 @@
+.bread-image {
+  border: var(--slds-g-sizing-border-4) solid var(--slds-g-color-surface-1);
+  border-radius: var(--slds-g-radius-border-4);
+  /* overflow: hidden; */
+}
