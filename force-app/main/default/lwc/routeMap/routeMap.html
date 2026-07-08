@@ -1,0 +1,109 @@
+<template>
+    <div class="container">
+
+        <!-- Header -->
+        <div class="header">
+            <div class="header-title">
+                <span class="header-icon">🗺️</span>
+                <h2>Route Optimiser</h2>
+            </div>
+            <p class="header-subtitle">Add coordinates below, then calculate the shortest round-trip driving route.</p>
+        </div>
+
+        <!-- Coordinate Inputs -->
+        <div class="card">
+            <div class="section-header">
+                <label class="field-label">Waypoints <span class="badge">{coordinateCount}</span></label>
+                <button class="btn btn-secondary" onclick={addCoordinate}>+ Add Stop</button>
+            </div>
+
+            <div class="coords-list">
+                <template for:each={coordinates} for:item="coord" for:index="index">
+                    <div key={coord.id} class="coord-row">
+                        <div class="coord-index">
+                            <template if:true={coord.isFirst}>🏠</template>
+                            <template if:false={coord.isFirst}>{coord.displayIndex}</template>
+                        </div>
+                        <input
+                            type="text"
+                            class="input-field coord-input"
+                            placeholder="Latitude (e.g. 51.5074)"
+                            value={coord.lat}
+                            data-id={coord.id}
+                            data-field="lat"
+                            onchange={handleCoordChange}
+                        />
+                        <input
+                            type="text"
+                            class="input-field coord-input"
+                            placeholder="Longitude (e.g. -0.1278)"
+                            value={coord.lng}
+                            data-id={coord.id}
+                            data-field="lng"
+                            onchange={handleCoordChange}
+                        />
+                        <template if:false={coord.isFirst}>
+                            <button class="btn btn-danger" data-id={coord.id} onclick={removeCoordinate}>✕</button>
+                        </template>
+                        <template if:true={coord.isFirst}>
+                            <div class="btn-placeholder"></div>
+                        </template>
+                    </div>
+                </template>
+            </div>
+
+            <p class="hint">The first waypoint is your start/home. The route will return here.</p>
+        </div>
+
+        <!-- Actions -->
+        <div class="actions">
+            <button class="btn btn-primary" onclick={calculateRoute} disabled={isLoading}>
+                <template if:true={isLoading}>⏳ Calculating...</template>
+                <template if:false={isLoading}>🚗 Calculate Optimal Route</template>
+            </button>
+            <button class="btn btn-secondary" onclick={resetAll}>Reset</button>
+        </div>
+
+        <!-- Error -->
+        <template if:true={errorMessage}>
+            <div class="alert alert-error">{errorMessage}</div>
+        </template>
+
+        <!-- Route Summary -->
+        <template if:true={routeSummary}>
+            <div class="card route-summary">
+                <h3>Route Summary</h3>
+                <div class="summary-stats">
+                    <div class="stat">
+                        <span class="stat-value">{routeSummary.distance}</span>
+                        <span class="stat-label">Total Distance</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value">{routeSummary.duration}</span>
+                        <span class="stat-label">Est. Drive Time</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value">{routeSummary.stops}</span>
+                        <span class="stat-label">Stops</span>
+                    </div>
+                </div>
+                <div class="optimised-order">
+                    <p class="field-label">Optimised Stop Order:</p>
+                    <p class="order-text">{routeSummary.order}</p>
+                </div>
+            </div>
+        </template>
+
+        <!-- Map -->
+        <div class="card map-card">
+            <div id="routeMapContainer" class="map-container"></div>
+            <template if:false={mapReady}>
+                <div class="map-placeholder">
+                    <span>🗺️</span>
+                    <p>Map will appear here after calculating a route</p>
+                </div>
+            </template>
+        </div>
+
+    </div>
+</template>
