@@ -17,6 +17,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <description>System Administrator of Bread</description>
+    <externalCredentialPrincipalAccesses>
+        <enabled>true</enabled>
+        <externalCredentialPrincipal>OpenRouteService-ORS_Api_Key</externalCredentialPrincipal>
+    </externalCredentialPrincipalAccesses>
     <fieldPermissions>
         <editable>true</editable>
         <field>Bread__c.Description__c</field>

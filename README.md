@@ -4,13 +4,16 @@ Salesforce demo for custom objects
 House keeping:
 1. `"language": "en_US"` in `config/project-scratch-def.json` will create a scratch org in English
 2. If you need to change the org default language to English run the Anonymous Apex script at `scripts/apex/change-language-to-english.apex`
+3. ORS API Key is not saved in the repo. Get a new key at: https://openrouteservice.org/dev/#/signup
 
 Setup:
 1. >SFDX Push Source to Default Org
-2. Assign the Bread Admin Permission Set to your System Admin user
-1. Use the Data Import Wizard to map and import Bread records from `scripts/data/Bread.csv`
-2. Run the Anonymous Apex script at `scripts/apex/add-bread-record-image.apex` to add images of breads
-3. 
+2. Go to Setup > Security > Named Credentials > External Credentials > OpenRouteService and edit the Principal `ORS_Api_Key`:
+    * Add new Authentication Parameter with name: `Authorization` and value: <<ORS API key>>
+3. Assign the Bread Admin Permission Set to your System Admin user
+4. Use the Data Import Wizard to map and import Bread records from `scripts/data/Bread.csv`
+5. Run the Anonymous Apex script at `scripts/apex/add-bread-record-image.apex` to add images of breads
+ 
 
 # Salesforce DX Project
 
