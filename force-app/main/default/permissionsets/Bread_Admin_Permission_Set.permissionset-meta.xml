@@ -16,6 +16,10 @@
         <apexClass>FileService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>HttpResponseService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <description>System Administrator of Bread</description>
     <externalCredentialPrincipalAccesses>
         <enabled>true</enabled>
