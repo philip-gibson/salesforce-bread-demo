@@ -71,4 +71,8 @@
         <tab>Bread__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
+    <tabSettings>
+        <tab>Delivery_Planner</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
 </PermissionSet>

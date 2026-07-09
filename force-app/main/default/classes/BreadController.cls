@@ -22,56 +22,79 @@ public with sharing class BreadController {
   public static String optimiseRoute(String coordinatesJson) {
     try {
       List<Object> coords = (List<Object>) JSON.deserializeUntyped(coordinatesJson);
+      Integer n = coords.size();
 
-      List<Map<String, Object>> jobs = new List<Map<String, Object>>();
-      for (Integer i = 1; i < coords.size(); i++) {
-        Map<String, Object> job = new Map<String, Object>{
-          'id'       => i,
-          'location' => coords[i]
-        };
-        jobs.add(job);
-      }
-
-      Map<String, Object> vehicle = new Map<String, Object>{
-        'id'      => 1,
-        'profile' => 'driving-car',
-        'start'   => coords[0],
-        'end'     => coords[0]
+      // ── Step 1: fetch duration matrix ────────────────────────────────
+      // ORS matrix returns durations[i][j] = seconds from location i to j
+      Map<String, Object> matrixBody = new Map<String, Object>{
+        'locations' => coords,
+        'metrics'   => new List<String>{ 'duration' },
+        'sources'   => buildIndexList(n),
+        'destinations' => buildIndexList(n)
       };
 
-      Map<String, Object> body = new Map<String, Object>{
-        'jobs'     => jobs,
-        'vehicles' => new List<Object>{ vehicle }
-      };
-
-      HttpResponse res = HttpResponseService.makeCallout(
+      HttpResponse matrixRes = HttpResponseService.makeCallout(
         NAMED_CRED,
-        '/v2/optimization',
-        JSON.serialize(body)
+        '/v2/matrix/driving-car',
+        JSON.serialize(matrixBody),
+        'application/json'
       );
 
-      if (res.getStatusCode() != 200) {
-        HttpResponseService.throwApiError(NAMED_CRED + ' Optimisation', res);
+      if (matrixRes.getStatusCode() != 200) {
+        HttpResponseService.throwApiError(NAMED_CRED + ' Matrix', matrixRes);
       }
 
-      // Parse response and extract ordered job IDs
-      Map<String, Object> data   = (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
-      List<Object>        routes = (List<Object>) data.get('routes');
-      Map<String, Object> route  = (Map<String, Object>) routes[0];
-      List<Object>        steps  = (List<Object>) route.get('steps');
+      Map<String, Object> matrixData = (Map<String, Object>) JSON.deserializeUntyped(matrixRes.getBody());
+      List<Object> durationsRaw = (List<Object>) matrixData.get('durations');
 
-      List<Integer> orderedJobIds = new List<Integer>();
-      for (Object stepObj : steps) {
-        Map<String, Object> step = (Map<String, Object>) stepObj;
-        if (step.get('type') == 'job') {
-          orderedJobIds.add(Integer.valueOf(step.get('job')));
+      // Parse into a 2D Decimal array
+      List<List<Decimal>> dist = new List<List<Decimal>>();
+      for (Object row : durationsRaw) {
+        List<Object>  rowList = (List<Object>) row;
+        List<Decimal> rowDec  = new List<Decimal>();
+        for (Object cell : rowList) {
+          rowDec.add(cell == null ? 999999999 : Decimal.valueOf(String.valueOf(cell)));
         }
+        dist.add(rowDec);
       }
 
-      // Build the ordered coord list: start → optimised stops → start
+      // ── Step 2: nearest-neighbour TSP from node 0 ───────────────────
+      // Visits every stop (indices 1..n-1) exactly once, returns to 0.
+      List<Boolean> visited   = new List<Boolean>();
+      for (Integer i = 0; i < n; i++) { visited.add(false); }
+      visited[0] = true;
+
+      List<Integer> tour    = new List<Integer>{ 0 };
+      Integer       current = 0;
+
+      for (Integer step = 0; step < n - 1; step++) {
+        Integer nearest  = -1;
+        Decimal bestDist = 999999999;
+
+        for (Integer j = 1; j < n; j++) {         // skip 0 (home)
+          if (!visited[j] && dist[current][j] < bestDist) {
+            bestDist = dist[current][j];
+            nearest  = j;
+          }
+        }
+        if (nearest == -1) break;                  // safety
+        visited[nearest] = true;
+        tour.add(nearest);
+        current = nearest;
+      }
+      // tour is now [0, stopA, stopB, ...] — the home-return is implied
+
+      // ── Step 3: build return values ──────────────────────────────────
+      // orderedJobIds: the stop indices in visit order (excludes 0/home)
+      List<Integer> orderedJobIds = new List<Integer>();
+      for (Integer i = 1; i < tour.size(); i++) {
+        orderedJobIds.add(tour[i]);
+      }
+
+      // orderedCoords: home → stops in order → home (for directions call)
       List<Object> orderedCoords = new List<Object>{ coords[0] };
-      for (Integer jobId : orderedJobIds) {
-        orderedCoords.add(coords[jobId]);
+      for (Integer idx : orderedJobIds) {
+        orderedCoords.add(coords[idx]);
       }
       orderedCoords.add(coords[0]);
 
@@ -101,7 +124,8 @@ public with sharing class BreadController {
       HttpResponse res = HttpResponseService.makeCallout(
         NAMED_CRED,
         '/v2/directions/driving-car/geojson',
-        JSON.serialize(body)
+        JSON.serialize(body),
+        'application/geo+json, application/json'
       );
 
       if (res.getStatusCode() != 200) {
@@ -116,6 +140,12 @@ public with sharing class BreadController {
     } catch (Exception e) {
       throw new AuraHandledException('getDirections error: ' + e.getMessage());
     }
+  }
+
+  private static List<Integer> buildIndexList(Integer n) {
+    List<Integer> idx = new List<Integer>();
+    for (Integer i = 0; i < n; i++) { idx.add(i); }
+    return idx;
   }
 
   public class ImageDTO {
