@@ -9,7 +9,7 @@ House keeping:
 Setup:
 1. >SFDX Push Source to Default Org
 2. Go to Setup > Security > Named Credentials > External Credentials > OpenRouteService and edit the Principal `ORS_Api_Key`:
-    * Add new Authentication Parameter with name: `Authorization` and value: <<ORS API key>>
+    * Add new Authentication Parameter with name: `ApiKey` and value: <<ORS API key>>
 3. Assign the Bread Admin Permission Set to your System Admin user
 4. Use the Data Import Wizard to map and import Bread records from `scripts/data/Bread.csv`
 5. Run the Anonymous Apex script at `scripts/apex/add-bread-record-image.apex` to add images of breads
