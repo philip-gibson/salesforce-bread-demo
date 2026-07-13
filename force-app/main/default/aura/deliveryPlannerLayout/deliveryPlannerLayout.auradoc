@@ -1,0 +1,18 @@
+<aura:documentation>
+  <aura:description>
+    A custom Lightning App Page template that provides a Header and Left Sidebar layout.
+    The template exposes three regions:
+    - Header: a full-width region spanning the top of the page.
+    - Sidebar: a narrow left-hand region, one-third of the page width.
+    - Main: the primary content region, two-thirds of the page width.
+
+    Custom CSS LightningPageNoHeader is used to hide the default Salesforce header.
+    
+    This template is available in the Custom Templates section of the 
+    Lightning App Builder new page wizard for App Pages.
+  </aura:description>
+  <aura:example name="HeaderAndLeftSidebar" ref="c:headerAndLeftSidebar" label="Header and Left Sidebar">
+    A header region spanning the full width of the page, with a left sidebar 
+    and main content area displayed side by side below it.
+  </aura:example>
+</aura:documentation>

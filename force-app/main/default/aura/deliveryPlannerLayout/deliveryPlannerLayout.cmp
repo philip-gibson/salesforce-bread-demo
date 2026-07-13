@@ -1,0 +1,24 @@
+<aura:component implements="lightning:appHomeTemplate" description="Custom header and left sidebar layout">
+  <aura:attribute name="Header" type="Aura.Component[]"/>
+  <aura:attribute name="Sidebar" type="Aura.Component[]"/>
+  <aura:attribute name="Main" type="Aura.Component[]"/>
+
+  <!-- Load custom CSS to hide the default header -->
+  <ltng:require styles="{!$Resource.LightningPageNoHeader}"/>
+
+  <div class="slds-grid slds-grid_vertical">
+    <!-- Header region -->
+    <div class="slds-col slds-size_1-of-1">
+      {!v.Header}
+    </div>
+    <!-- Sidebar + Main content -->
+    <div class="slds-grid slds-wrap slds-col">
+      <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3">
+        {!v.Sidebar}
+      </div>
+      <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-3 slds-large-size_2-of-3">
+        {!v.Main}
+      </div>
+    </div>
+  </div>
+</aura:component>
