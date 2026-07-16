@@ -1,4 +1,4 @@
-import { LightningElement, wire } from 'lwc';
+import { LightningElement, api, wire } from 'lwc';
 import { gql, graphql } from 'lightning/uiGraphQLApi';
 
 export default class AccountSelector extends LightningElement {
@@ -16,11 +16,21 @@ export default class AccountSelector extends LightningElement {
           id: index + 1,
           accountId: account.Id,
           name: account.Name,
+          street: account.ShippingStreet,
+          city: account.ShippingCity,
+          state: account.ShippingState,
+          postalCode: account.ShippingPostalCode,
           lat: account.ShippingLatitude,
           lng: account.ShippingLongitude,
         };
       });
     this.dispatchEvent(new CustomEvent("selected", { detail: selected }));
+  }
+
+  @api resetAll() {
+    Array.from(this.template.querySelectorAll("lightning-input"))
+      .filter(input => input.type === "checkbox")
+      .forEach(input => input.checked = false);
   }
 
   @wire(graphql, {

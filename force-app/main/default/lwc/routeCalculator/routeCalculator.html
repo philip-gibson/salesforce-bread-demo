@@ -4,25 +4,39 @@
     <div class="alert alert-error">{errorMessage}</div>
   </template>
 
-  <!-- Route Summary -->
-  <h3 class="text-title slds-p-bottom_x-small">Route Summary</h3>
-  <div class="summary-stats">
-    <div class="stat">
-      <span class="stat-value">{routeSummary.distance}</span>
-      <span class="stat-label">Total Distance</span>
+  <div class="route-info">
+    <div>
+      <!-- Route Summary -->
+      <h3 class="slds-p-vertical_x-small">Route Summary</h3>
+      <div class="summary-stats">
+        <div class="stat">
+          <span class="stat-value">{routeSummary.distance}</span>
+          <span class="stat-label">Total Distance</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">{routeSummary.duration}</span>
+          <span class="stat-label">Est. Drive Time</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">{routeSummary.stops}</span>
+          <span class="stat-label">Stops</span>
+        </div>
+      </div>
     </div>
-    <div class="stat">
-      <span class="stat-value">{routeSummary.duration}</span>
-      <span class="stat-label">Est. Drive Time</span>
+    <!-- Shortest Round-trip -->
+    <div class="optimised-order">
+      <p class="field-label">Shortest round-trip driving route</p>
+      <ul lwc:if={routeSummary.order}>
+        <template for:each={routeSummaryOrder} for:item="delivery">
+          <li key={delivery.index} class="slds-grid">
+            <img lwc:if={delivery.showLogo} src={logo} alt="Salesforce Bakery" class="salesforce-bakery"></img>
+            <p lwc:else class="order-number">{delivery.index}. </p>
+            <p class="order-text">{delivery.stop}</p>
+          </li>
+        </template>
+      </ul>
+      <p lwc:else class="order-text">N/A</p>
     </div>
-    <div class="stat">
-      <span class="stat-value">{routeSummary.stops}</span>
-      <span class="stat-label">Stops</span>
-    </div>
-  </div>
-  <div class="optimised-order">
-    <p class="field-label">Optimised Stop Order:</p>
-    <p class="order-text">{routeSummary.order}</p>
   </div>
 
   <!-- Map -->

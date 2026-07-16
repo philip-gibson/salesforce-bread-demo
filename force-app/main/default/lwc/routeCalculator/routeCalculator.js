@@ -15,19 +15,19 @@ const initRouteSummary = {
   distance: '0.0 km',
   duration: '0 min',
   stops: 0,
-  order: 'N/A',
+  order: null,
 };
 
 let leafletLoaded = false;
 
 export default class RouteCalculator extends LightningElement {
   @api coordinates = [];
-  isLoading    = false;
-  errorMessage = '';
-  routeSummary = initRouteSummary;
-  mapReady     = false;
+  logo             = breadBasket;
+  isLoading        = false;
+  errorMessage     = '';
+  routeSummary     = initRouteSummary;
+  mapReady         = false;
 
-  // _nextId = 4;
   _map    = null;
   _layers = [];
 
@@ -48,9 +48,18 @@ export default class RouteCalculator extends LightningElement {
     }
   }
 
+  get routeSummaryOrder() {
+    if (!this.routeSummary.order) return {};
+    return this.routeSummary.order.map((stop, index) => {
+      return {
+        stop: stop,
+        index: index,
+        showLogo: index === 0 || index === this.routeSummary.order.length - 1,
+      };
+    });
+  }
+
   @api resetAll() {
-    // this.coordinates = [];
-    // this._nextId      = 4;
     this.errorMessage = '';
     this.routeSummary = initRouteSummary;
     this.mapReady     = false;
@@ -61,7 +70,6 @@ export default class RouteCalculator extends LightningElement {
     this.errorMessage = '';
     this.routeSummary = initRouteSummary;
 
-    console.log('*** Calculating route for coordinates:', this.coordinates);
     // Validate coords
     const filled = this.coordinates.filter(c => c.lat !== '' && c.lng !== '');
     if (filled.length < 2) {
@@ -82,7 +90,7 @@ export default class RouteCalculator extends LightningElement {
     try {
       // Build coordinate array [[lng, lat], ...] for ORS
       const coords = filled.map(c => [Number.parseFloat(c.lng), Number.parseFloat(c.lat)]);
-      console.log('*** coords:', coords);
+
       // ── Step 1: Call Apex to optimise waypoint order ─────────────────
       // Apex → Named Credential → ORS /v2/optimization
       // API key stays server-side, never touches the browser
@@ -91,14 +99,12 @@ export default class RouteCalculator extends LightningElement {
       );
 
       const { orderedJobIds, orderedCoords } = optimResult;
-      console.log('*** orderedCoords:', orderedCoords);
       // Build human-readable stop order label
       const orderedJobNames = orderedJobIds.map(id => {
-        console.log('*** Finding name for job ID:', id);
         return this.coordinates.find(c => c.id === id)?.name || `Stop ${id}`;
       });
       const stopLabels = ['Salesforce Bakery', ...orderedJobNames, 'Salesforce Bakery'];
-      const orderText  = stopLabels.join(' → ');
+      // const orderText  = stopLabels.join(' → ');
 
       // ── Step 2: Call Apex to get road-snapped GeoJSON ────────────────
       // Apex → Named Credential → ORS /v2/directions
@@ -114,7 +120,7 @@ export default class RouteCalculator extends LightningElement {
         distance: this._formatDistance(summary.distance),
         duration: this._formatDuration(summary.duration),
         stops:    filled.length - 1,
-        order:    orderText,
+        order:    stopLabels,
       };
 
       // ── Step 4: Draw on Leaflet map ──────────────────────────────────
@@ -168,11 +174,11 @@ export default class RouteCalculator extends LightningElement {
                 width:36px;height:36px;display:flex;align-items:center;
                 justify-content:center;font-size:18px;font-weight:bold;
                 border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.35);">
-                <img src="${breadBasket}" style="width:28px;height:28px;" alt="Bread Basket"></img></div>`,
+                <img src="${breadBasket}" style="width:24px;height:20px;" alt="Bread Basket"></img></div>`,
           className: '', iconSize: [36, 36], iconAnchor: [18, 18],
         });
         L.marker([filledCoords[0].lat, filledCoords[0].lng], { icon: homeIcon })
-          .bindPopup('<b>🏠 Home / Start</b>')
+          .bindPopup(`<b>${filledCoords[0].name}</b><br />${filledCoords[0].street}<br />${filledCoords[0].city}<br />${filledCoords[0].state} ${filledCoords[0].postalCode}`)
           .addTo(this._map);
 
         // Numbered stop markers
@@ -187,7 +193,7 @@ export default class RouteCalculator extends LightningElement {
             className: '', iconSize: [30, 30], iconAnchor: [15, 15],
           });
           L.marker([coord.lat, coord.lng], { icon: stopIcon })
-            .bindPopup(`<b>Stop ${label}</b><br>Lat: ${coord.lat}<br>Lng: ${coord.lng}`)
+            .bindPopup(`<b>${coord.name}</b><br />${coord.street}<br />${coord.city}<br />${coord.state} ${coord.postalCode}`)
             .addTo(this._map);
         });
 

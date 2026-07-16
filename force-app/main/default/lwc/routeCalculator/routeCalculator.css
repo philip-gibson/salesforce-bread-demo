@@ -12,23 +12,30 @@
   color: #8c1f18;
 }
 
+/* ── Route info ───────────────────────────────────────────────────────────── */
+.route-info {
+  display: flex;
+  justify-content: space-between;
+}
+
 /* ── Route summary ──────────────────────────────────────────────────────── */
 .summary-stats {
   display: flex;
-  gap: 1.5rem;
+  flex-direction: column;
+  gap: 0.5rem;
   margin-bottom: 1rem;
 }
 
 .stat {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
 }
 
 .stat-value {
   font-size: 1.5rem;
   font-weight: 700;
   color: #0176d3;
+  line-height: 1.25;
 }
 
 .stat-label {
@@ -39,21 +46,37 @@
 }
 
 .optimised-order {
+  flex: 0 1 50%;
   background: #f0f5fb;
   border-radius: 8px;
   padding: 0.5rem 1rem;
   margin-bottom: 1rem;
 }
 
-.optimised-order .field-label {
+.field-label {
   margin-bottom: 0.2rem;
 }
 
-.optimised-order .order-text {
+.order-number {
+  width: 24px;
+  text-align: center;
+  margin-right: 0.5rem;
+  font-size: 0.875rem;
+  color: #032d60;
+  font-weight: 500;
+}
+
+.order-text {
   margin: 0;
   font-size: 0.875rem;
   color: #032d60;
   font-weight: 500;
+}
+
+.salesforce-bakery {
+  width: 24px;
+  height: 20px;
+  margin-right: 0.5rem;
 }
 
 /* ── Map ────────────────────────────────────────────────────────────────── */

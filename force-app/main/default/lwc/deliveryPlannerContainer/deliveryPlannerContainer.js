@@ -17,6 +17,10 @@ export default class DeliveryPlannerContainer extends LightningElement {
                   Id
                   Name { value }
                   ShippingAddress {
+                    ShippingCity { value }
+                    ShippingPostalCode { value }
+                    ShippingState { value }
+                    ShippingStreet { value }
                     ShippingLatitude { value }
                     ShippingLongitude { value }
                   }
@@ -40,6 +44,10 @@ export default class DeliveryPlannerContainer extends LightningElement {
       id: 0,
       accountId: account.Id,
       name: account.Name.value,
+      street: account.ShippingAddress.ShippingStreet.value,
+      city: account.ShippingAddress.ShippingCity.value,
+      state: account.ShippingAddress.ShippingState.value,
+      postalCode: account.ShippingAddress.ShippingPostalCode.value,
       lat: account.ShippingAddress.ShippingLatitude.value,
       lng: account.ShippingAddress.ShippingLongitude.value,
     } : {};
@@ -50,6 +58,7 @@ export default class DeliveryPlannerContainer extends LightningElement {
   }
 
   resetDeliveryRoute() {
+    this.template.querySelector('c-account-selector').resetAll();
     this.template.querySelector('c-route-calculator').resetAll();
   }
 }
