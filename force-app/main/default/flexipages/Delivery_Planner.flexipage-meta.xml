@@ -7,26 +7,22 @@
                 <identifier>c_deliveryPlannerHeader</identifier>
             </componentInstance>
         </itemInstances>
-        <name>region1</name>
-        <type>Region</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <name>region2</name>
+        <name>Header</name>
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>routeMap</componentName>
-                <identifier>c_routeMap</identifier>
+                <componentName>deliveryPlannerContainer</componentName>
+                <identifier>c_deliveryPlannerContainer</identifier>
             </componentInstance>
         </itemInstances>
-        <name>region3</name>
+        <name>Main</name>
         <type>Region</type>
     </flexiPageRegions>
     <masterLabel>Delivery Planner</masterLabel>
     <template>
-        <name>flexipage:appHomeTemplateHeaderTwoColumnsLeftSidebar</name>
+        <name>deliveryPlannerLayout</name>
     </template>
     <type>AppPage</type>
 </FlexiPage>

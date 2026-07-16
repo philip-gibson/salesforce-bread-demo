@@ -1,0 +1,4 @@
+.text-title {
+  font-size: var(--slds-g-font-scale-1);
+  color: var(--slds-g-color-on-surface-3);
+}

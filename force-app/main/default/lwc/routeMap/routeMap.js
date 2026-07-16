@@ -195,7 +195,7 @@ export default class RouteMap extends LightningElement {
         // eslint-disable-next-line @lwc/lwc/no-async-operation
         setTimeout(() => {
             try {
-                const container = this.template.querySelector('#routeMapContainer');
+                const container = this.refs.mapContainer;
                 if (!container) return;
 
                 this._destroyMap();

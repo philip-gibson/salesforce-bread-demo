@@ -1,0 +1,38 @@
+<template>
+  <!-- Error -->
+  <template if:true={errorMessage}>
+    <div class="alert alert-error">{errorMessage}</div>
+  </template>
+
+  <!-- Route Summary -->
+  <h3 class="text-title slds-p-bottom_x-small">Route Summary</h3>
+  <div class="summary-stats">
+    <div class="stat">
+      <span class="stat-value">{routeSummary.distance}</span>
+      <span class="stat-label">Total Distance</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value">{routeSummary.duration}</span>
+      <span class="stat-label">Est. Drive Time</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value">{routeSummary.stops}</span>
+      <span class="stat-label">Stops</span>
+    </div>
+  </div>
+  <div class="optimised-order">
+    <p class="field-label">Optimised Stop Order:</p>
+    <p class="order-text">{routeSummary.order}</p>
+  </div>
+
+  <!-- Map -->
+  <div class="card map-card">
+    <div lwc:ref="mapContainer" class="map-container"></div>
+    <template if:false={mapReady}>
+      <div class="map-placeholder">
+        <lightning-icon icon-name="standard:address" alternative-text="Address" title="Address"></lightning-icon>
+        <p>Map will appear here after calculating a route</p>
+      </div>
+    </template>
+  </div>
+</template>

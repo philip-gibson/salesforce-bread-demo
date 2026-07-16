@@ -96,7 +96,7 @@
 
         <!-- Map -->
         <div class="card map-card">
-            <div id="routeMapContainer" class="map-container"></div>
+            <div lwc:ref="mapContainer" class="map-container"></div>
             <template if:false={mapReady}>
                 <div class="map-placeholder">
                     <span>🗺️</span>
