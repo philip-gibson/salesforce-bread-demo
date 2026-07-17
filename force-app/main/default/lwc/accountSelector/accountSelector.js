@@ -1,7 +1,13 @@
 import { LightningElement, api, wire } from 'lwc';
-import { gql, graphql } from 'lightning/uiGraphQLApi';
+import { gql, graphql, refreshGraphQL } from 'lightning/uiGraphQLApi';
 
 export default class AccountSelector extends LightningElement {
+  _accountList;
+
+  refreshList() {
+    return refreshGraphQL(this._accountList);
+  }
+
   handleCheckboxChange() {
     const checkedIds = new Set(
       Array.from(this.template.querySelectorAll("lightning-input"))
@@ -67,10 +73,12 @@ export default class AccountSelector extends LightningElement {
           }
         }
       `
-  }) accountList;
+  }) wiredAccounts(result) {
+    this._accountList = result;
+  }
 
   get accounts() {
-    return this.accountList?.data?.uiapi?.query?.Account?.edges?.map(edge => ({
+    return this._accountList?.data?.uiapi?.query?.Account?.edges?.map(edge => ({
       Id: edge.node.Id,
       Name: edge.node.Name?.value,
       ShippingStreet: edge.node.ShippingAddress?.ShippingStreet?.value,
