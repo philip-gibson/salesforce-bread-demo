@@ -3,7 +3,7 @@
     <canAccessCamera>false</canAccessCamera>
     <canAccessMicrophone>false</canAccessMicrophone>
     <context>All</context>
-    <description>OpenStreetMapTiles, used by routeMap LWC to draw round-trip of multiple delivery points.</description>
+    <description>OpenStreetMapTiles, used by routeCalculator LWC to draw round-trip of multiple delivery points.</description>
     <endpointUrl>https://*.tile.openstreetmap.org</endpointUrl>
     <isActive>true</isActive>
     <isApplicableToConnectSrc>false</isApplicableToConnectSrc>
