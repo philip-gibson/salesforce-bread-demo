@@ -54,11 +54,17 @@ export default class DeliveryPlannerContainer extends LightningElement {
   }
 
   calculateDeliveryRoute() {
+    if (this.disableButton) return;
     this.template.querySelector('c-route-calculator').calculateRoute();
   }
 
   resetDeliveryRoute() {
     this.template.querySelector('c-account-selector').resetAll();
     this.template.querySelector('c-route-calculator').resetAll();
+    this.deliveryPoints = [];
+  }
+
+  get disableButton() {
+    return this.deliveryPoints.length < 2 || this.deliveryPoints.length > 10;
   }
 }
