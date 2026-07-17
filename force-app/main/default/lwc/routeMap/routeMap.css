@@ -1,0 +1,308 @@
+/* ── Layout ─────────────────────────────────────────────────────────────── */
+.container {
+    font-family: 'Salesforce Sans', Arial, sans-serif;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 1.25rem;
+    color: #032d60;
+}
+
+.card {
+    background: #fff;
+    border: 1px solid #dde7f0;
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+/* ── Header ─────────────────────────────────────────────────────────────── */
+.header {
+    margin-bottom: 1.25rem;
+}
+
+.header-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.header-title h2 {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #032d60;
+}
+
+.header-icon {
+    font-size: 1.5rem;
+}
+
+.header-subtitle {
+    margin: 0.3rem 0 0;
+    color: #444;
+    font-size: 0.875rem;
+}
+
+/* ── Form elements ──────────────────────────────────────────────────────── */
+.field-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #444;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.input-field {
+    border: 1px solid #c9d9e8;
+    border-radius: 4px;
+    padding: 0.45rem 0.7rem;
+    font-size: 0.875rem;
+    color: #032d60;
+    background: #f8fbff;
+    transition: border-color 0.15s;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: #0176d3;
+    background: #fff;
+    box-shadow: 0 0 0 2px rgba(1, 118, 211, 0.18);
+}
+
+.api-key-row {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.api-key-row .input-field {
+    flex: 1;
+}
+
+.link-btn {
+    white-space: nowrap;
+    font-size: 0.8rem;
+    color: #0176d3;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.link-btn:hover {
+    text-decoration: underline;
+}
+
+/* ── Section header ─────────────────────────────────────────────────────── */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.section-header .field-label {
+    margin-bottom: 0;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #0176d3;
+    color: #fff;
+    border-radius: 12px;
+    padding: 0 7px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    margin-left: 6px;
+    height: 18px;
+}
+
+/* ── Coordinates list ───────────────────────────────────────────────────── */
+.coords-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.coord-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.coord-index {
+    width: 28px;
+    min-width: 28px;
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #0176d3;
+}
+
+.coord-input {
+    flex: 1;
+}
+
+.btn-placeholder {
+    width: 32px;
+    min-width: 32px;
+}
+
+.hint {
+    margin: 0.6rem 0 0;
+    font-size: 0.78rem;
+    color: #777;
+}
+
+/* ── Buttons ────────────────────────────────────────────────────────────── */
+.actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.btn {
+    padding: 0.5rem 1.2rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, opacity 0.15s;
+}
+
+.btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.btn-primary {
+    background: #0176d3;
+    color: #fff;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: #0558a5;
+}
+
+.btn-secondary {
+    background: #f0f5fb;
+    color: #0176d3;
+    border: 1px solid #c9d9e8;
+}
+
+.btn-secondary:hover {
+    background: #dde7f0;
+}
+
+.btn-danger {
+    background: transparent;
+    color: #c23934;
+    border: 1px solid #f0d0cf;
+    padding: 0.45rem 0.6rem;
+    font-size: 0.8rem;
+    border-radius: 4px;
+    min-width: 32px;
+}
+
+.btn-danger:hover {
+    background: #fdf0ef;
+}
+
+/* ── Alert ──────────────────────────────────────────────────────────────── */
+.alert {
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+}
+
+.alert-error {
+    background: #fdf0ef;
+    border: 1px solid #f5a593;
+    color: #8c1f18;
+}
+
+/* ── Route summary ──────────────────────────────────────────────────────── */
+.route-summary h3 {
+    margin: 0 0 1rem;
+    font-size: 1rem;
+    color: #032d60;
+}
+
+.summary-stats {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0176d3;
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.optimised-order {
+    background: #f0f5fb;
+    border-radius: 6px;
+    padding: 0.6rem 0.9rem;
+}
+
+.optimised-order .field-label {
+    margin-bottom: 0.2rem;
+}
+
+.order-text {
+    margin: 0;
+    font-size: 0.875rem;
+    color: #032d60;
+    font-weight: 500;
+}
+
+/* ── Map ────────────────────────────────────────────────────────────────── */
+.map-card {
+    padding: 0;
+    overflow: hidden;
+    min-height: 420px;
+    position: relative;
+}
+
+.map-container {
+    width: 100%;
+    height: 480px;
+    border-radius: 8px;
+}
+
+.map-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    color: #aaa;
+    font-size: 0.875rem;
+}
+
+.map-placeholder span {
+    font-size: 3rem;
+}

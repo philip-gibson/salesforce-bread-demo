@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RemoteSiteSetting xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>OpenRouteService, used by routeMap LWC to calculate the shortest round-trip order of multiple delivery points.</description>
+    <disableProtocolSecurity>false</disableProtocolSecurity>
+    <isActive>true</isActive>
+    <url>https://api.openrouteservice.org</url>
+</RemoteSiteSetting>

@@ -1,0 +1,18 @@
+<aura:component implements="lightning:appHomeTemplate" description="Custom layout for Delivery Planner">
+  <aura:attribute name="Header" type="Aura.Component[]"/>
+  <aura:attribute name="Main" type="Aura.Component[]"/>
+
+  <!-- Load custom CSS to hide the default header -->
+  <ltng:require styles="{!$Resource.LightningPageNoHeader}"/>
+
+  <div class="slds-grid slds-grid_vertical">
+    <!-- Header region -->
+    <div class="slds-col slds-size_1-of-1">
+      {!v.Header}
+    </div>
+    <!-- Header region -->
+    <div class="slds-col slds-size_1-of-1">
+      {!v.Main}
+    </div>
+  </div>
+</aura:component>

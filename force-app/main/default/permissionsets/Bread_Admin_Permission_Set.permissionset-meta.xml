@@ -16,7 +16,15 @@
         <apexClass>FileService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>HttpResponseService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <description>System Administrator of Bread</description>
+    <externalCredentialPrincipalAccesses>
+        <enabled>true</enabled>
+        <externalCredentialPrincipal>OpenRouteService-ORS_Api_Key</externalCredentialPrincipal>
+    </externalCredentialPrincipalAccesses>
     <fieldPermissions>
         <editable>true</editable>
         <field>Bread__c.Description__c</field>
@@ -61,6 +69,10 @@
     </objectPermissions>
     <tabSettings>
         <tab>Bread__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>Delivery_Planner</tab>
         <visibility>Visible</visibility>
     </tabSettings>
 </PermissionSet>

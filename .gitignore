@@ -46,3 +46,12 @@ $RECYCLE.BIN/
 **/__pycache__/
 **/.venv/
 **/venv/
+
+# Salesforce - Profiles
+**/*.profile-meta.xml
+
+# Salesforce - Profile Session Settings
+**/*.profileSessionSetting-meta.xml
+
+# Salesforce - Profile Password Policies
+**/*.profilePasswordPolicy-meta.xml

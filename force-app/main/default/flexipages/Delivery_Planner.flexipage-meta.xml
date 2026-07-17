@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentName>deliveryPlannerHeader</componentName>
+                <identifier>c_deliveryPlannerHeader</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Header</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentName>deliveryPlannerContainer</componentName>
+                <identifier>c_deliveryPlannerContainer</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Main</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <masterLabel>Delivery Planner</masterLabel>
+    <template>
+        <name>deliveryPlannerLayout</name>
+    </template>
+    <type>AppPage</type>
+</FlexiPage>

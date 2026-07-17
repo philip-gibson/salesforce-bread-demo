@@ -1,0 +1,25 @@
+.header-layout {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+@media (min-width: 1024px) {
+  .header-layout {
+    margin: 0 1rem 1rem;
+  }
+}
+
+.header-layout img {
+  width: 10rem;
+}
+
+.header-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.entity-name-title {
+  font-size: var(--slds-g-font-scale-1);
+  color: var(--slds-g-color-neutral-base-30);
+}
