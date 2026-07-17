@@ -1,8 +1,11 @@
 <template>
   <lightning-card hide-header label="Select Accounts for Delivery">
     <div class="slds-m-around_medium">
-      <h3 class="text-title slds-p-bottom_x-small">Select Accounts for Delivery (max 10)</h3>
-      <ul>
+      <div class="slds-grid">
+        <h3 class="text-title">Select Accounts for Delivery</h3>
+        <c-new-account onsuccess={refreshList} class="button-positioning"></c-new-account>
+      </div>
+      <ul class="slds-p-top_x-small">
         <template for:each={accounts} for:item="account">
           <li key={account.Id} class="slds-p-bottom_x-small">
             <lightning-input type="checkbox" label={account.Name} data-id={account.Id} onchange={handleCheckboxChange}></lightning-input>
