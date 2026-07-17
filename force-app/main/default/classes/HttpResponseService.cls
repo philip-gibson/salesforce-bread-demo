@@ -5,7 +5,6 @@ public with sharing class HttpResponseService {
     req.setMethod('POST');
     req.setHeader('Content-Type', 'application/json');
     req.setHeader('Accept', acceptHeader);
-    // req.setHeader('Authorization', 'Bearer {!$Credential.ORS_Api_Key.Authorization}'); // why does this work?
     req.setTimeout(30000);
     req.setBody(jsonBody);
 
