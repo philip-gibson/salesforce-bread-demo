@@ -65,6 +65,7 @@ export default class DeliveryPlannerContainer extends LightningElement {
   }
 
   get disableButton() {
-    return this.deliveryPoints.length < 2 || this.deliveryPoints.length > 10;
+    console.log('*** delivery Points: ', this.deliveryPoints)
+    return this.deliveryPoints.length < 2 || this.deliveryPoints.length > 11;
   }
 }

@@ -1,11 +1,9 @@
 <template>
-  <div class="slds-grid slds-wrap slds-gutters_x-small">
-    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3">
-      <div class="slds-m-bottom_medium">
-        <c-account-selector onselected={updateDeliveryPoints}></c-account-selector>
-      </div>
-    </div>
-    <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-3 slds-large-size_2-of-3 slds-m-bottom_medium">
+  <c-delivery-planner-grid>
+    <span slot="select-accounts">
+      <c-account-selector onselected={updateDeliveryPoints}></c-account-selector>
+    </span>
+    <span slot="calculate-route">
       <lightning-card hide-header label="Calculate Delivery Route">
         <div class="slds-m-around_medium">
           <div class="buttons">
@@ -15,6 +13,13 @@
           <c-route-calculator coordinates={deliveryPoints}></c-route-calculator>
         </div>
       </lightning-card>
-    </div>
-  </div>
+    </span>
+    <span slot="account-details">
+      <lightning-card hide-header label="View Bread Orders">
+        <div class="slds-m-around_medium">
+          <p>It's me!</p>
+        </div>
+      </lightning-card>
+    </span>
+  </c-delivery-planner-grid>
 </template>

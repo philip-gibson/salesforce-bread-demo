@@ -1,0 +1,31 @@
+.grid-container {
+  display: grid;
+  gap: 1rem;
+  grid-template-areas:
+    "a"
+    "b"
+    "c";
+  grid-template-columns: 1fr;
+}
+
+.item-a { grid-area: a; }
+.item-b { grid-area: b; }
+.item-c { grid-area: c; }
+
+/* Medium: 2 columns — col 1 has child A, col 2 stacks B and C */
+@media (min-width: 768px) {
+  .grid-container {
+    grid-template-areas:
+      "a b"
+      "a c";
+    grid-template-columns: 1fr 2fr;
+  }
+}
+
+/* Large: 3 columns — one child per column */
+@media (min-width: 1196px) {
+  .grid-container {
+    grid-template-areas: "a b c";
+    grid-template-columns: 1fr 2fr 1fr;
+  }
+}
