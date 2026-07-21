@@ -50,10 +50,6 @@ public class Accounts extends fflib_SObjectDomain {
      */
     private void validateShippingState() {
         for (Account acc : (List<Account>) Records) {
-            if (String.isBlank(acc.ShippingState)) {
-                continue;
-            }
-
             if (acc.ShippingState.equalsIgnoreCase(REQUIRED_STATE)) {
                 acc.ShippingState = REQUIRED_STATE;
             } else {
@@ -69,10 +65,6 @@ public class Accounts extends fflib_SObjectDomain {
     private void validateShippingPostalCode() {
         for (Account acc : (List<Account>) Records) {
             String zipRaw = acc.ShippingPostalCode;
-
-            if (String.isBlank(zipRaw)) {
-                continue;
-            }
 
             String trimmedZip = zipRaw.trim();
 
