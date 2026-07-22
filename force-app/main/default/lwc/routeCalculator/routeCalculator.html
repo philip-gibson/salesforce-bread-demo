@@ -31,7 +31,8 @@
           <li key={delivery.index} class="slds-grid">
             <img lwc:if={delivery.showLogo} src={logo} alt="Salesforce Bakery" class="salesforce-bakery"></img>
             <p lwc:else class="order-number">{delivery.index}. </p>
-            <p class="order-text">{delivery.stop}</p>
+            <button lwc:if={delivery.accountId} class="order-text" data-id={delivery.accountId} onclick={viewBreadOrder} type="button">{delivery.stop}</button>
+            <p lwc:else class="order-text">{delivery.stop}</p>
           </li>
         </template>
       </ul>

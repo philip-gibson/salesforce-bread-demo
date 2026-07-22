@@ -71,6 +71,13 @@
   font-size: 0.875rem;
   color: #032d60;
   font-weight: 500;
+  text-align: left;
+  background: none;
+  border: none;
+}
+
+.order-text:hover {
+  text-decoration: underline;
 }
 
 .salesforce-bakery {
