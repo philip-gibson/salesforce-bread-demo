@@ -52,11 +52,17 @@ export default class RouteCalculator extends LightningElement {
     if (!this.routeSummary.order) return {};
     return this.routeSummary.order.map((stop, index) => {
       return {
-        stop: stop,
+        stop: stop.name,
+        accountId: stop.accountId,
         index: index,
         showLogo: index === 0 || index === this.routeSummary.order.length - 1,
       };
     });
+  }
+
+  viewBreadOrder(event) {
+    const accountId = event.target.dataset.id;
+    this.dispatchEvent(new CustomEvent("vieworder", { detail: accountId }));
   }
 
   @api resetAll() {
@@ -101,9 +107,10 @@ export default class RouteCalculator extends LightningElement {
       const { orderedJobIds, orderedCoords } = optimResult;
       // Build human-readable stop order label
       const orderedJobNames = orderedJobIds.map(id => {
-        return this.coordinates.find(c => c.id === id)?.name || `Stop ${id}`;
+        const stop = this.coordinates.find(c => c.id === id);
+        return stop ? { name: stop.name, accountId: stop.accountId } : { name: `Stop ${id}` };
       });
-      const stopLabels = ['Salesforce Bakery', ...orderedJobNames, 'Salesforce Bakery'];
+      const stopLabels = [{ name: 'Salesforce Bakery' }, ...orderedJobNames, { name: 'Salesforce Bakery' }];
       // const orderText  = stopLabels.join(' → ');
 
       // ── Step 2: Call Apex to get road-snapped GeoJSON ────────────────
