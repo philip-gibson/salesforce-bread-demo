@@ -76,7 +76,7 @@
   border: none;
 }
 
-.order-text:hover {
+button.order-text:hover {
   text-decoration: underline;
 }
 

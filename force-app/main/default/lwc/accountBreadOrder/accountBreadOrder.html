@@ -1,0 +1,11 @@
+<template>
+  <lightning-card hide-header label="View Bread Orders">
+    <div class="slds-m-around_medium">
+      <div class="header">
+        <h3 class="header-text">Bread Order</h3>
+      </div>
+      <p lwc:if={breadOrder}>{breadOrder}</p>
+      <p lwc:else>N/A</p>
+    </div>
+  </lightning-card>
+</template>

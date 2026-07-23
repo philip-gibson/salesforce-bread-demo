@@ -3,7 +3,7 @@ import { gql, graphql } from 'lightning/uiGraphQLApi';
 
 export default class DeliveryPlannerContainer extends LightningElement {
   deliveryPoints = [];
-  breadOrder = null;
+  breadOrderAccountId = null;
 
   @wire(graphql, {
     query: gql`
@@ -66,8 +66,7 @@ export default class DeliveryPlannerContainer extends LightningElement {
   }
 
   viewBreadOrder(event) {
-    this.breadOrder = event.detail;
-    console.log('*** breadOrder account ID: ', this.breadOrder)
+    this.breadOrderAccountId = event.detail;
   }
 
   get disableButton() {
