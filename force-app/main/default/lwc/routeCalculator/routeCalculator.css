@@ -58,7 +58,7 @@
 }
 
 .order-number {
-  width: 24px;
+  min-width: 24px;
   text-align: center;
   margin-right: 0.5rem;
   font-size: 0.875rem;

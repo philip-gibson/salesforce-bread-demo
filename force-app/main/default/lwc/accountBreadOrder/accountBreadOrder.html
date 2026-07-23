@@ -2,10 +2,19 @@
   <lightning-card hide-header label="View Bread Orders">
     <div class="slds-m-around_medium">
       <div class="header">
-        <h3 class="header-text">Bread Order</h3>
+        <h3 class="header-text">Bread Orders for Delivery</h3>
       </div>
-      <p lwc:if={breadOrder}>{breadOrder}</p>
-      <p lwc:else>N/A</p>
+      <template lwc:if={hasOrders}>
+        <ul>
+          <template for:each={accountBreadOrders} for:item="order">
+            <li key={order.Id} class="slds-p-bottom_x-small">
+              {order.Bread__r.Name} x {order.Quantity__c}
+            </li>
+          </template>
+        </ul>
+        <p>Total: ${total}</p>
+      </template>
+      <p lwc:else>Click account to view bread orders for delivery.</p>
     </div>
   </lightning-card>
 </template>
