@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Unit_Price__c</fullName>
+    <description>Snapshot of the Unit Price of the Bread at time of order.</description>
+    <inlineHelpText>Snapshot of the Unit Price of the Bread at time of order.</inlineHelpText>
+    <label>Unit Price</label>
+    <precision>4</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>
