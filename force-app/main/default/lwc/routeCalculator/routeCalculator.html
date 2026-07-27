@@ -26,7 +26,16 @@
     <!-- Shortest Round-trip -->
     <div class="optimised-order">
       <p class="field-label">Shortest round-trip driving route</p>
-      <ul lwc:if={routeSummary.order}>
+      <template lwc:if={isLoading}>
+        <div class="slds-is-relative slds-p-vertical_large spinner-container">
+          <lightning-spinner
+            alternative-text="Loading bread orders"
+            class="spinner-bg"
+            size="small"
+          ></lightning-spinner>
+        </div>
+      </template>
+      <ul lwc:elseif={routeSummary.order}>
         <template for:each={routeSummaryOrder} for:item="delivery">
           <li key={delivery.index} class="slds-grid">
             <img lwc:if={delivery.showLogo} src={logo} alt="Salesforce Bakery" class="salesforce-bakery"></img>

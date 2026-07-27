@@ -45,6 +45,14 @@
   letter-spacing: 0.04em;
 }
 
+.spinner-container {
+  height: calc(100% - 2rem);
+}
+
+.spinner-bg {
+  background: transparent;
+}
+
 .optimised-order {
   flex: 0 1 50%;
   background: #f0f5fb;

@@ -21,5 +21,6 @@ Setup:
 5. Use the Data Import Wizard to map and import Bread records from `scripts/data/Breads.csv`
 6. Use the Data Import Wizard to map and import Account records from `scripts/data/Accounts.csv`
 7. Run the Anonymous Apex script at `scripts/apex/add-bread-record-image.apex` to add images of breads
+8. Run the Anonymous Apex script at `scripts/apex/add-bread-orders.apex` to add bread orders
  
 
