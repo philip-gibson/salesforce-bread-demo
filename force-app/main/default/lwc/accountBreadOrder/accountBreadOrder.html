@@ -4,7 +4,16 @@
       <div class="header">
         <h3 class="header-text">Bread Orders for Delivery</h3>
       </div>
-      <template lwc:if={hasOrders}>
+      <template lwc:if={isLoading}>
+        <div class="slds-is-relative slds-p-vertical_large">
+          <lightning-spinner
+            alternative-text="Loading bread orders"
+            size="small"
+          ></lightning-spinner>
+        </div>
+      </template>
+      <template lwc:elseif={hasOrders}>
+        <p class="account-name">{accountName}</p>
         <ul>
           <template for:each={accountBreadOrders} for:item="order">
             <li key={order.Id} class="slds-p-bottom_x-small">
@@ -12,7 +21,8 @@
             </li>
           </template>
         </ul>
-        <p>Total: ${total}</p>
+        <hr class="slds-m-vertical_medium" />
+        <p class="total">Total: ${total}</p>
       </template>
       <p lwc:else>Click account to view bread orders for delivery.</p>
     </div>
