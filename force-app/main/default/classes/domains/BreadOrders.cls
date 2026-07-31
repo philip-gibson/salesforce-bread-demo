@@ -1,11 +1,6 @@
 /**
- * BreadOrders
- *
  * Domain class for the BreadOrder SObject, implemented per the
  * Apex Enterprise Patterns (fflib_SObjectDomain) approach.
- *
- * Business rules enforced:
- *   1. Unit_Price__c is sourced from the lookup Bread__c record.
  */
 public with sharing class BreadOrders extends fflib_SObjectDomain {
   public BreadOrders(List<Bread_Order__c> records) {
@@ -36,6 +31,9 @@ public with sharing class BreadOrders extends fflib_SObjectDomain {
     validateBreadNotChanged(existingRecords);
   }
 
+  /**
+   * Sets Unit_Price__c sourced from the lookup Bread__c record.
+   */
   private void setUnitPrice() {
     List<Bread_Order__c> newOrders = (List<Bread_Order__c>) Records;
 
@@ -63,6 +61,9 @@ public with sharing class BreadOrders extends fflib_SObjectDomain {
     }
   }
 
+  /**
+   * Checks the lookup Bread__c record has not been updated.
+   */
   private void validateBreadNotChanged(Map<Id, SObject> existingRecords) {
     for (Bread_Order__c order : (List<Bread_Order__c>) Records) {
       Bread_Order__c oldOrder = (Bread_Order__c) existingRecords.get(order.Id);
