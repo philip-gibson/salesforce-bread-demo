@@ -1,0 +1,40 @@
+<template>
+  <lightning-card title="Bread Orders" icon-name="utility:orders">
+    <div class="slds-p-horizontal_medium">
+      <lightning-tabset>
+        <lightning-tab label="Current">
+          <template lwc:if={hasOrders}>
+            <ul>
+              <template for:each={current} for:item="order">
+                <li key={order.Id} class="slds-p-bottom_x-small">
+                  {order.Bread__r.Name} x {order.Quantity__c}
+                </li>
+              </template>
+            </ul>
+            <hr class="slds-m-vertical_medium" />
+            <p class="total">Total: ${total}</p>
+          </template>
+          <p lwc:else>No bread orders made.</p>
+        </lightning-tab>
+        <lightning-tab label="Delivered">
+          <ul>
+            <template for:each={delivered} for:item="order">
+              <li key={order.Id} class="slds-p-bottom_x-small">
+                {order.Bread__r.Name} x {order.Quantity__c}
+              </li>
+            </template>
+          </ul>
+        </lightning-tab>
+        <lightning-tab label="Cancelled">
+          <ul>
+            <template for:each={cancelled} for:item="order">
+              <li key={order.Id} class="slds-p-bottom_x-small">
+                {order.Bread__r.Name} x {order.Quantity__c}
+              </li>
+            </template>
+          </ul>
+        </lightning-tab>
+      </lightning-tabset>
+    </div>
+  </lightning-card>    
+</template>
