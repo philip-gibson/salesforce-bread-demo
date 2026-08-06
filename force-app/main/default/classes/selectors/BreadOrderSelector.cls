@@ -3,7 +3,7 @@ public with sharing class BreadOrderSelector {
   private static final String READY_STATUS = 'Ready';
 
   /**
-   * Returns all Bread_Order__c records for the given Account.
+   * Returns all Bread_Order__c records for the given Account ID.
    */
   public static List<Bread_Order__c> getBreadOrdersByAccountId(Id accountId) {
     if (accountId == null) {
@@ -20,14 +20,10 @@ public with sharing class BreadOrderSelector {
   }
 
   /**
-   * Returns the "Ready" Bread_Order__c detail records for the given Account
-   * (via the Account__c master-detail relationship).
-   *
-   * Returns an empty list when accountId is null, so callers can safely
-   * invoke this before an account has been selected.
+   * Returns the Bread_Order__c detail records for the given Account ID and Status.
    */
-  public static List<Bread_Order__c> getReadyOrdersByAccountId(Id accountId) {
-    if (accountId == null) {
+  public static List<Bread_Order__c> getBreadOrdersByAccountIdAndStatus(Id accountId, String status) {
+    if (accountId == null || status == null) {
       return new List<Bread_Order__c>();
     }
 
@@ -35,7 +31,7 @@ public with sharing class BreadOrderSelector {
       SELECT Id, Total__c, Status__c, Quantity__c, Bread__r.Name
       FROM Bread_Order__c
       WHERE Account__c = :accountId
-        AND Status__c = :READY_STATUS
+        AND Status__c = :status
       WITH USER_MODE
       ORDER BY Bread__r.Name
     ];

@@ -2,15 +2,8 @@ import { LightningElement, api, wire } from 'lwc';
 import getBreadOrdersByAccountId from '@salesforce/apex/BreadOrderController.getBreadOrdersByAccountId';
 
 export default class AccountBreadOrders extends LightningElement {
-  @api
-  get recordId() {
-    return this._recordId;
-  }
-  set recordId(value) {
-    this._recordId = value;
-  }
+  @api recordId;
 
-  _recordId;
   accountBreadOrders;
   error;
 
@@ -29,12 +22,12 @@ export default class AccountBreadOrders extends LightningElement {
     return this.accountBreadOrders && this.accountBreadOrders.length > 0;
   }
 
-  get current() {
+  get ready() {
     return this.accountBreadOrders ? this.accountBreadOrders.filter(order => order.Status__c.toLowerCase() === 'ready') : [];
   }
 
   get total() {
-    return this.current.reduce((total, order) => total + order.Total__c, 0.00).toFixed(2)
+    return this.ready.reduce((total, order) => total + order.Total__c, 0.00).toFixed(2)
   }
 
   get delivered() {

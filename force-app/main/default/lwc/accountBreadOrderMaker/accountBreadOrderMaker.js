@@ -1,5 +1,7 @@
 import { LightningElement, api, wire } from 'lwc';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import LightningConfirm from "lightning/confirm";
+import createBreadOrder from '@salesforce/apex/AccountController.createBreadOrder';
 import getBreads from '@salesforce/apex/AccountController.getBreads';
 
 export default class AccountBreadOrderMaker extends LightningElement {
@@ -7,17 +9,10 @@ export default class AccountBreadOrderMaker extends LightningElement {
   quantity = 0;
   breads;
   error;
-  _recordId;
   
-  @api
-  get recordId() {
-    return this._recordId;
-  }
-  set recordId(value) {
-    this._recordId = value;
-  }
+  @api recordId;
 
-  @wire(getBreads, { recordId: '$recordId' })
+  @wire(getBreads)
   wiredOrders({ data, error }) {
     if (data) {
       this.breads = data;
@@ -67,8 +62,14 @@ export default class AccountBreadOrderMaker extends LightningElement {
       theme: 'inverse',
     });
     if (result) {
-      // create bread order
-      this.handleReset()
+      try {
+        await createBreadOrder({
+          breadOrder: { accountId: this.recordId, breadId: this.selectedBread, quantity: this.quantity }
+        });
+        this.handleReset();
+      } catch (error) {
+        this.showErrorToast(error);
+      }
     }
   }
 
@@ -104,5 +105,16 @@ export default class AccountBreadOrderMaker extends LightningElement {
       quantityInput.setCustomValidity("");
     }
     quantityInput.reportValidity();
+  }
+
+  showErrorToast(_error) {
+    this.dispatchEvent(
+      new ShowToastEvent({
+        title: 'Bread Order could not be made',
+        message: 'An unexpected error occurred.',
+        variant: 'error',
+        mode: 'sticky',
+      })
+    );
   }
 }
