@@ -1,11 +1,11 @@
 <template>
-  <lightning-card title="Bread Orders" icon-name="utility:orders">
+  <lightning-card title="Bread Orders" icon-name="utility:checkout">
     <div class="slds-p-horizontal_medium">
       <lightning-tabset>
-        <lightning-tab label="Current">
+        <lightning-tab label="Ready for Delivery">
           <template lwc:if={hasOrders}>
             <ul>
-              <template for:each={current} for:item="order">
+              <template for:each={ready} for:item="order">
                 <li key={order.Id} class="slds-p-bottom_x-small">
                   {order.Bread__r.Name} x {order.Quantity__c}
                 </li>

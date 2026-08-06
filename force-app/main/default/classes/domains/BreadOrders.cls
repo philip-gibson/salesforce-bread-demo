@@ -21,7 +21,7 @@ public with sharing class BreadOrders extends fflib_SObjectDomain {
 	 * Called by the handleBeforeInsert()
 	 **/
   public override void onApplyDefaults() {
-    setUnitPrice();
+    setStatusAndUnitPrice();
   }
 
   /**
@@ -34,11 +34,12 @@ public with sharing class BreadOrders extends fflib_SObjectDomain {
   /**
    * Sets Unit_Price__c sourced from the lookup Bread__c record.
    */
-  private void setUnitPrice() {
+  private void setStatusAndUnitPrice() {
     List<Bread_Order__c> newOrders = (List<Bread_Order__c>) Records;
 
     Set<Id> breadIds = new Set<Id>();
     for (Bread_Order__c order : newOrders) {
+      setStatus(order);
       if (order.Bread__c != null) {
         breadIds.add(order.Bread__c);
       } else {
@@ -74,5 +75,13 @@ public with sharing class BreadOrders extends fflib_SObjectDomain {
         );
       }
     }
+  }
+
+  /**
+   * Sets default Status__c to 'New' if it is null.
+   */
+  private void setStatus(Bread_Order__c order) {
+    if (order.Status__c == null)
+      order.Status__c = 'New';
   }
 }

@@ -1,0 +1,16 @@
+<template>
+  <lightning-card title="Bread Orders - In Progress" icon-name="utility:breadcrumbs">
+    <div class="slds-p-horizontal_medium">
+      <template lwc:if={hasOrders}>
+        <ul>
+          <template for:each={newBreadOrders} for:item="order">
+            <li key={order.Id} class="slds-p-bottom_x-small">
+              {order.Bread__r.Name} x {order.Quantity__c}
+            </li>
+          </template>
+        </ul>
+      </template>
+      <p lwc:else>No new bread orders.</p>
+    </div>
+  </lightning-card>
+</template>
