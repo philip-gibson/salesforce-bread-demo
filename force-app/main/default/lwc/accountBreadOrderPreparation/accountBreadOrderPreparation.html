@@ -1,11 +1,15 @@
 <template>
   <lightning-card title="Bread Orders - In Progress" icon-name="utility:breadcrumbs">
+    <lightning-button label="Ready for Delivery" disabled={disabled} onclick={readyForDelivery} slot="actions"></lightning-button>
     <div class="slds-p-horizontal_medium">
       <template lwc:if={hasOrders}>
-        <ul>
+        <ul class="slds-p-top_xx-small">
           <template for:each={newBreadOrders} for:item="order">
-            <li key={order.Id} class="slds-p-bottom_x-small">
-              {order.Bread__r.Name} x {order.Quantity__c}
+            <li key={order.id} class="slds-p-bottom_x-small">
+              <div class="slds-grid slds-grid_align-spread">
+                <p>{order.name} x {order.quantity}</p>
+                <lightning-button-icon-stateful icon-name="utility:check" size="small" onclick={handleClick} alternative-text={order.name} data-order-id={order.id} selected={order.selected}></lightning-button-icon-stateful>
+              </div>
             </li>
           </template>
         </ul>

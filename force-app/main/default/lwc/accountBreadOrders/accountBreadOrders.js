@@ -1,5 +1,5 @@
 import { LightningElement, api, wire } from 'lwc';
-import getBreadOrdersByAccountId from '@salesforce/apex/BreadOrderController.getBreadOrdersByAccountId';
+import getBreadOrdersByAccountId from '@salesforce/apex/AccountController.getBreadOrdersByAccountId';
 
 export default class AccountBreadOrders extends LightningElement {
   @api recordId;

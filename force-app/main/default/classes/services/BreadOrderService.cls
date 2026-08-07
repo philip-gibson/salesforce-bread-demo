@@ -23,10 +23,26 @@ public with sharing class BreadOrderService {
   }
 
   public static List<Bread_Order__c> getBreadOrdersByAccountIdAndStatus(Id accountId, String status) {
+    BreadOrders.validateStatus(status);
     return BreadOrderSelector.getBreadOrdersByAccountIdAndStatus(accountId, status);
   }
 
-  public static List<Bread_Order__c> getReadyOrdersByAccountId(Id accountId) {
-    return BreadOrderSelector.getBreadOrdersByAccountIdAndStatus(accountId, 'Ready');
+  public static List<Bread_Order__c> setBreadOrdersToStatus(List<Id> breadOrderIds, String status) {
+    BreadOrders.validateStatus(status);
+    // fflib_ISObjectUnitOfWork uow = Application.UnitOfWork.newInstance();
+    List<Bread_Order__c> breadOrders = new List<Bread_Order__c>();
+    for (Id id : breadOrderIds) {
+      breadOrders.add(new Bread_Order__c(Id = id, Status__c = status));
+    }
+    // IBreadOrders domain = (IBreadOrders) Application.Domain.newInstance(breadOrders, Bread_Order__c.SObjectType);
+    // domain.applyDefaultsAndValidate();
+
+    // for (Bread_Order__c bO : breadOrders) {
+    //   uow.registerDirty(bO);
+    // }
+
+    // uow.commitWork();
+    update breadOrders; // use insert while Application and UoW are still to do
+    return breadOrders;
   }
 }
