@@ -6,8 +6,3 @@
 .bread-selector {
   flex: 1 1 100%;
 }
-
-.buttons {
-  display: flex;
-  justify-content: space-between;
-}

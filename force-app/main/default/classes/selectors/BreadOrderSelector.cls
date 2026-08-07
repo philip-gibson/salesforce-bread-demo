@@ -23,7 +23,9 @@ public with sharing class BreadOrderSelector {
    * Returns the Bread_Order__c detail records for the given Account ID and Status.
    */
   public static List<Bread_Order__c> getBreadOrdersByAccountIdAndStatus(Id accountId, String status) {
-    if (accountId == null || status == null) {
+    BreadOrders.validateStatus(status);
+
+    if (accountId == null) {
       return new List<Bread_Order__c>();
     }
 

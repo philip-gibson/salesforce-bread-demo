@@ -1,6 +1,8 @@
 <template>
     <lightning-card title="Bread Order" icon-name="utility:add">
-      <div class="slds-p-horizontal_medium">
+      <lightning-button variant="base" label="Reset" onclick={handleReset} slot="actions"></lightning-button>
+      <lightning-button class="slds-m-left_medium" label="Create Order" onclick={handleOrder} slot="actions"></lightning-button>
+      <div class="slds-p-horizontal_medium slds-m-bottom_medium">
         <div class="order-maker">
           <lightning-combobox
             class="bread-selector"
@@ -18,10 +20,6 @@
             value={quantity}
             onblur={handleBlurQuantity}
             onchange={handleChangeQuantity}></lightning-input>
-        </div>
-        <div class="buttons slds-m-vertical_medium">
-          <lightning-button label="Create Order" onclick={handleOrder}></lightning-button>
-          <lightning-button variant="base" label="Reset" onclick={handleReset}></lightning-button>
         </div>
       </div>
     </lightning-card>
