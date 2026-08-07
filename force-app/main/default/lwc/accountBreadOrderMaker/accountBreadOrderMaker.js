@@ -1,6 +1,8 @@
 import { LightningElement, api, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import LightningConfirm from "lightning/confirm";
+import { publish, MessageContext } from 'lightning/messageService';
+import BreadOrderCreated from '@salesforce/messageChannel/BreadOrderCreated__c';
+import LightningConfirm from 'lightning/confirm';
 import createBreadOrder from '@salesforce/apex/AccountController.createBreadOrder';
 import getBreads from '@salesforce/apex/AccountController.getBreads';
 
@@ -22,6 +24,9 @@ export default class AccountBreadOrderMaker extends LightningElement {
       this.breads = undefined;
     }
   }
+
+  @wire(MessageContext)
+  messageContext;
 
   get options() {
     if (!this.breads || this.breads.length === 0) return []
@@ -66,6 +71,7 @@ export default class AccountBreadOrderMaker extends LightningElement {
         await createBreadOrder({
           breadOrder: { accountId: this.recordId, breadId: this.selectedBread, quantity: this.quantity }
         });
+        publish(this.messageContext, BreadOrderCreated);
         this.handleReset();
       } catch (error) {
         this.showErrorToast(error);
