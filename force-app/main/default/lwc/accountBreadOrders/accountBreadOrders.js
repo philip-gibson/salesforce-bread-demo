@@ -1,14 +1,21 @@
 import { LightningElement, api, wire } from 'lwc';
+import { refreshApex } from '@salesforce/apex';
+import { subscribe, unsubscribe, MessageContext } from 'lightning/messageService';
+import BreadOrderReady from '@salesforce/messageChannel/BreadOrderReady__c';
 import getBreadOrdersByAccountId from '@salesforce/apex/AccountController.getBreadOrdersByAccountId';
 
 export default class AccountBreadOrders extends LightningElement {
   @api recordId;
 
+  subscription;
+  wiredOrdersResult;
   accountBreadOrders;
   error;
 
   @wire(getBreadOrdersByAccountId, { recordId: '$recordId' })
-  wiredOrders({ data, error }) {
+  wiredOrders(result) {
+    this.wiredOrdersResult = result;
+    const { data, error } = result;
     if (data) {
       this.accountBreadOrders = data;
       this.error = undefined;
@@ -16,6 +23,36 @@ export default class AccountBreadOrders extends LightningElement {
       this.error = error;
       this.accountBreadOrders = undefined;
     }
+  }
+
+  @wire(MessageContext)
+  messageContext;
+
+  subscribeToMessageChannel() {
+    if (!this.subscription) {
+      this.subscription = subscribe(
+        this.messageContext,
+        BreadOrderReady,
+        (message) => this.handleMessage(message),
+      );
+    }
+  }
+
+  unsubscribeToMessageChannel() {
+    unsubscribe(this.subscription);
+    this.subscription = null;
+  }
+
+  async handleMessage(_message) {
+    await refreshApex(this.wiredOrdersResult);
+  }
+
+  connectedCallback() {
+    this.subscribeToMessageChannel();
+  }
+
+  disconnectedCallback() {
+    this.unsubscribeToMessageChannel();
   }
 
   get hasOrders() {

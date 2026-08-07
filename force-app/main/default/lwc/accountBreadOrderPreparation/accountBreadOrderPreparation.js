@@ -1,12 +1,16 @@
 import { LightningElement, api, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { refreshApex } from '@salesforce/apex';
+import { publish, subscribe, unsubscribe, MessageContext } from 'lightning/messageService';
+import BreadOrderCreated from '@salesforce/messageChannel/BreadOrderCreated__c';
+import BreadOrderReady from '@salesforce/messageChannel/BreadOrderReady__c';
 import getNewBreadOrders from '@salesforce/apex/AccountController.getNewBreadOrders';
 import setBreadOrdersToReady from '@salesforce/apex/AccountController.setBreadOrdersToReady';
 
 export default class AccountBreadOrderPreparation extends LightningElement {
   @api recordId;
 
+  subscription;
   wiredOrdersResult;
   newBreadOrders;
   error;
@@ -29,6 +33,36 @@ export default class AccountBreadOrderPreparation extends LightningElement {
       this.error = error;
       this.newBreadOrders = undefined;
     }
+  }
+
+  @wire(MessageContext)
+  messageContext;
+
+  subscribeToMessageChannel() {
+    if (!this.subscription) {
+      this.subscription = subscribe(
+        this.messageContext,
+        BreadOrderCreated,
+        (message) => this.handleMessage(message),
+      );
+    }
+  }
+
+  unsubscribeToMessageChannel() {
+    unsubscribe(this.subscription);
+    this.subscription = null;
+  }
+
+  async handleMessage(_message) {
+    await refreshApex(this.wiredOrdersResult);
+  }
+
+  connectedCallback() {
+    this.subscribeToMessageChannel();
+  }
+
+  disconnectedCallback() {
+    this.unsubscribeToMessageChannel();
   }
 
   get hasOrders() {
@@ -55,6 +89,7 @@ export default class AccountBreadOrderPreparation extends LightningElement {
       try {
         const breadOrderIds = this.newBreadOrders.filter(order => order.selected).map(order => order.id);
         await setBreadOrdersToReady({ breadOrderIds });
+        publish(this.messageContext, BreadOrderReady);
         await refreshApex(this.wiredOrdersResult);
       } catch (error) {
         this.showErrorToast(error);

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<LightningMessageChannel xmlns="http://soap.sforce.com/2006/04/metadata">
+    <masterLabel>Bread Order Ready - Message Channel</masterLabel>
+    <isExposed>false</isExposed>
+    <description>Message Channel to signal one or more Bread_Order__c records are in 'Ready' status.</description>
+</LightningMessageChannel>
