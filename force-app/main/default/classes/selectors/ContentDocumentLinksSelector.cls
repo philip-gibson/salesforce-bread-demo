@@ -1,4 +1,4 @@
-public with sharing class ContentDocumentLinkSelector {
+public with sharing class ContentDocumentLinksSelector {
 
   public static Set<Id> getDocIdsByRecord(Id recordId) {
     Set<Id> docIds = new Set<Id>();

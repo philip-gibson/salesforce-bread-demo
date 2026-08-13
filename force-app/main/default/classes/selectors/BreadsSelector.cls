@@ -1,4 +1,4 @@
-public with sharing class BreadSelector {
+public with sharing class BreadsSelector {
   /**
    * Returns all Bread__c records.
    */

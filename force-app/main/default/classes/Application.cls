@@ -19,7 +19,7 @@ public class Application {
 	public static final fflib_Application.SelectorFactory Selector = 
 		new fflib_Application.SelectorFactory(
 			new Map<SObjectType, Type> {
-				Bread_Order__c.SObjectType => BreadOrderSelector.class
+				Bread_Order__c.SObjectType => BreadOrdersSelector.class
       }
     );
 
