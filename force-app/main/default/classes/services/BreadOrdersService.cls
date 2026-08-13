@@ -1,4 +1,4 @@
-public with sharing class BreadOrderService {
+public with sharing class BreadOrdersService {
 
   public static List<Bread_Order__c> createBreadOrders(List<BreadOrderDTO> requests) {
     fflib_ISObjectUnitOfWork uow = Application.UnitOfWork.newInstance();

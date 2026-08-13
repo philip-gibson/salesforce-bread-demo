@@ -5,7 +5,7 @@ public with sharing class BreadOrderController {
   @AuraEnabled(cacheable=true)
   public static List<Bread_Order__c> getReadyOrders(Id accountId) {
     try {
-      return BreadOrderService.getBreadOrdersByAccountIdAndStatus(accountId, 'Ready');
+      return BreadOrdersService.getBreadOrdersByAccountIdAndStatus(accountId, 'Ready');
     } catch (Exception e) {
       throw new AuraHandledException(e.getMessage());
     }

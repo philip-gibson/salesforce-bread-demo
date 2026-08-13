@@ -29,7 +29,7 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>BreadOrderService</apexClass>
+        <apexClass>BreadOrdersService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -41,7 +41,7 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>BreadService</apexClass>
+        <apexClass>BreadsService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -53,11 +53,11 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>FileService</apexClass>
+        <apexClass>FilesService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HttpResponseService</apexClass>
+        <apexClass>HttpResponsesService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>

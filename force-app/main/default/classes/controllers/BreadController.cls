@@ -11,7 +11,7 @@ public with sharing class BreadController {
         return null;
       }
 
-      List<ContentVersion> recordImages = FileService.getFilesForRecord(recordId, bread.External_Id__c);
+      List<ContentVersion> recordImages = FilesService.getFilesForRecord(recordId, bread.External_Id__c);
       return recordImages.isEmpty() ? null : new ImageDTO(recordImages[0], bread.Name);
     } catch (Exception e) {
       throw new AuraHandledException(e.getMessage());
@@ -33,7 +33,7 @@ public with sharing class BreadController {
         'destinations' => buildIndexList(n)
       };
 
-      HttpResponse matrixRes = HttpResponseService.makeCallout(
+      HttpResponse matrixRes = HttpResponsesService.makeCallout(
         NAMED_CRED,
         '/v2/matrix/driving-car',
         JSON.serialize(matrixBody),
@@ -41,7 +41,7 @@ public with sharing class BreadController {
       );
 
       if (matrixRes.getStatusCode() != 200) {
-        HttpResponseService.throwApiError(NAMED_CRED + ' Matrix', matrixRes);
+        HttpResponsesService.throwApiError(NAMED_CRED + ' Matrix', matrixRes);
       }
 
       Map<String, Object> matrixData = (Map<String, Object>) JSON.deserializeUntyped(matrixRes.getBody());
@@ -121,7 +121,7 @@ public with sharing class BreadController {
         'coordinates' => coords
       };
 
-      HttpResponse res = HttpResponseService.makeCallout(
+      HttpResponse res = HttpResponsesService.makeCallout(
         NAMED_CRED,
         '/v2/directions/driving-car/geojson',
         JSON.serialize(body),
@@ -129,7 +129,7 @@ public with sharing class BreadController {
       );
 
       if (res.getStatusCode() != 200) {
-        HttpResponseService.throwApiError(NAMED_CRED + ' Directions', res);
+        HttpResponsesService.throwApiError(NAMED_CRED + ' Directions', res);
       }
 
       // Return the raw GeoJSON — Leaflet will parse it in the browser

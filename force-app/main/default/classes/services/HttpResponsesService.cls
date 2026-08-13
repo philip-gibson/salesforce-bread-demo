@@ -1,4 +1,4 @@
-public with sharing class HttpResponseService {
+public with sharing class HttpResponsesService {
   public static HttpResponse makeCallout(String NAMED_CRED, String path, String jsonBody, String acceptHeader) {
     HttpRequest req = new HttpRequest();
     req.setEndpoint(NAMED_CRED + path);
