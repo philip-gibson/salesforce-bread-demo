@@ -14,11 +14,11 @@ public with sharing class BreadOrderService {
   }
 
   public static List<Bread_Order__c> getBreadOrdersByAccountId(Id recordId) {
-    return BreadOrderSelector.getBreadOrdersByAccountId(recordId);
+    return BreadOrdersSelector.getBreadOrdersByAccountId(recordId);
   }
 
   public static List<Bread_Order__c> getBreadOrdersByAccountIdAndStatus(Id accountId, String status) {
-    return BreadOrderSelector.getBreadOrdersByAccountIdAndStatus(accountId, status);
+    return BreadOrdersSelector.getBreadOrdersByAccountIdAndStatus(accountId, status);
   }
 
   public static List<Bread_Order__c> setBreadOrdersToStatus(List<Id> breadOrderIds, String status) {

@@ -1,4 +1,4 @@
-public with sharing class BreadOrderSelector {
+public with sharing class BreadOrdersSelector {
 
   private static final String READY_STATUS = 'Ready';
 

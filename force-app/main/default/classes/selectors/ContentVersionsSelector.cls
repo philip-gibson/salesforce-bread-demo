@@ -1,4 +1,4 @@
-public with sharing class ContentVersionSelector {
+public with sharing class ContentVersionsSelector {
 
   public static List<ContentVersion> getByDocumentIds(Set<Id> docIds, String externalId) {
     String query = 'SELECT FileType ' +
