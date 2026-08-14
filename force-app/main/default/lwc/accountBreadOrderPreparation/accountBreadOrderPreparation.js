@@ -2,8 +2,7 @@ import { LightningElement, api, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { refreshApex } from '@salesforce/apex';
 import { publish, subscribe, unsubscribe, MessageContext } from 'lightning/messageService';
-import BreadOrderCreated from '@salesforce/messageChannel/BreadOrderCreated__c';
-import BreadOrderReady from '@salesforce/messageChannel/BreadOrderReady__c';
+import BreadOrderEvent from '@salesforce/messageChannel/BreadOrderEvent__c';
 import getNewBreadOrders from '@salesforce/apex/AccountController.getNewBreadOrders';
 import setBreadOrdersToReady from '@salesforce/apex/AccountController.setBreadOrdersToReady';
 
@@ -42,7 +41,7 @@ export default class AccountBreadOrderPreparation extends LightningElement {
     if (!this.subscription) {
       this.subscription = subscribe(
         this.messageContext,
-        BreadOrderCreated,
+        BreadOrderEvent,
         (message) => this.handleMessage(message),
       );
     }
@@ -53,8 +52,10 @@ export default class AccountBreadOrderPreparation extends LightningElement {
     this.subscription = null;
   }
 
-  async handleMessage(_message) {
-    await refreshApex(this.wiredOrdersResult);
+  async handleMessage(message) {
+    if (message?.eventType === 'created') {
+      await refreshApex(this.wiredOrdersResult);
+    }
   }
 
   connectedCallback() {
@@ -89,7 +90,7 @@ export default class AccountBreadOrderPreparation extends LightningElement {
       try {
         const breadOrderIds = this.newBreadOrders.filter(order => order.selected).map(order => order.id);
         await setBreadOrdersToReady({ breadOrderIds });
-        publish(this.messageContext, BreadOrderReady);
+        publish(this.messageContext, BreadOrderEvent, { eventType: 'ready' });
         await refreshApex(this.wiredOrdersResult);
       } catch (error) {
         this.showErrorToast(error);

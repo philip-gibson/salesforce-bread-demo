@@ -1,7 +1,7 @@
 import { LightningElement, api, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { publish, MessageContext } from 'lightning/messageService';
-import BreadOrderCreated from '@salesforce/messageChannel/BreadOrderCreated__c';
+import BreadOrderEvent from '@salesforce/messageChannel/BreadOrderEvent__c';
 import LightningConfirm from 'lightning/confirm';
 import createBreadOrder from '@salesforce/apex/AccountController.createBreadOrder';
 import getBreads from '@salesforce/apex/AccountController.getBreads';
@@ -71,7 +71,7 @@ export default class AccountBreadOrderMaker extends LightningElement {
         await createBreadOrder({
           breadOrder: { accountId: this.recordId, breadId: this.selectedBread, quantity: this.quantity }
         });
-        publish(this.messageContext, BreadOrderCreated);
+        publish(this.messageContext, BreadOrderEvent, { eventType: 'created' });
         this.handleReset();
       } catch (error) {
         this.showErrorToast(error);
