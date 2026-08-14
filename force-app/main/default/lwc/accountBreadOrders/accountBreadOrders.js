@@ -1,7 +1,7 @@
 import { LightningElement, api, wire } from 'lwc';
 import { refreshApex } from '@salesforce/apex';
 import { subscribe, unsubscribe, MessageContext } from 'lightning/messageService';
-import BreadOrderReady from '@salesforce/messageChannel/BreadOrderReady__c';
+import BreadOrderEvent from '@salesforce/messageChannel/BreadOrderEvent__c';
 import getBreadOrdersByAccountId from '@salesforce/apex/AccountController.getBreadOrdersByAccountId';
 
 export default class AccountBreadOrders extends LightningElement {
@@ -32,7 +32,7 @@ export default class AccountBreadOrders extends LightningElement {
     if (!this.subscription) {
       this.subscription = subscribe(
         this.messageContext,
-        BreadOrderReady,
+        BreadOrderEvent,
         (message) => this.handleMessage(message),
       );
     }
@@ -43,8 +43,10 @@ export default class AccountBreadOrders extends LightningElement {
     this.subscription = null;
   }
 
-  async handleMessage(_message) {
-    await refreshApex(this.wiredOrdersResult);
+  async handleMessage(message) {
+    if (message?.eventType === 'ready') {
+      await refreshApex(this.wiredOrdersResult);
+    }
   }
 
   connectedCallback() {
