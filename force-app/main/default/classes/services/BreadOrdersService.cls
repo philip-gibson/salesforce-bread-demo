@@ -27,10 +27,8 @@ public with sharing class BreadOrdersService {
     fflib_ISObjectUnitOfWork uow = Application.UnitOfWork.newInstance();
     List<Bread_Order__c> breadOrders = new List<Bread_Order__c>();
     for (Id id : breadOrderIds) {
-      breadOrders.add(new Bread_Order__c(Id = id, Status__c = status));
-    }
-
-    for (Bread_Order__c bO : breadOrders) {
+      Bread_Order__c bO = new Bread_Order__c(Id = id, Status__c = status); 
+      breadOrders.add(bO);
       uow.registerDirty(bO);
     }
 
