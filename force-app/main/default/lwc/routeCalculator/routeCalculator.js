@@ -1,8 +1,8 @@
 import { LightningElement, api } from 'lwc';
 import { loadScript, loadStyle } from 'lightning/platformResourceLoader';
 import breadBasket from '@salesforce/resourceUrl/BreadBasket';
-import optimiseRoute from '@salesforce/apex/BreadController.optimiseRoute';
-import getDirections from '@salesforce/apex/BreadController.getDirections';
+import optimiseRoute from '@salesforce/apex/DeliveryPlannerController.optimiseRoute';
+import getDirections from '@salesforce/apex/DeliveryPlannerController.getDirections';
 import LEAFLET_JS  from '@salesforce/resourceUrl/leaflet';
 import LEAFLET_CSS from '@salesforce/resourceUrl/leaflet';
 
