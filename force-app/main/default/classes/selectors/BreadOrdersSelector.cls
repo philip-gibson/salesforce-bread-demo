@@ -1,7 +1,4 @@
 public with sharing class BreadOrdersSelector {
-
-  private static final String READY_STATUS = 'Ready';
-
   /**
    * Returns all Bread_Order__c records for the given Account ID.
    */
