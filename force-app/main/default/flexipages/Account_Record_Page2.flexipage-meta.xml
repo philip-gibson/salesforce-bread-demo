@@ -213,6 +213,12 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>accountBreadOrderPreparation</componentName>
+                <identifier>c_accountBreadOrderPreparation</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentName>accountBreadOrders</componentName>
                 <identifier>c_accountBreadOrders</identifier>
             </componentInstance>
