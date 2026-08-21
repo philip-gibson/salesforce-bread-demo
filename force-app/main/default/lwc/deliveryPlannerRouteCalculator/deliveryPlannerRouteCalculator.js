@@ -20,7 +20,7 @@ const initRouteSummary = {
 
 let leafletLoaded = false;
 
-export default class RouteCalculator extends LightningElement {
+export default class DeliveryPlannerRouteCalculator extends LightningElement {
   @api coordinates = [];
   logo             = breadBasket;
   isLoading        = false;
