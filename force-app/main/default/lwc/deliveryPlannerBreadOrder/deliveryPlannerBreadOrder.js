@@ -1,7 +1,7 @@
 import { LightningElement, api, wire } from 'lwc';
 import getReadyOrders from '@salesforce/apex/DeliveryPlannerController.getReadyOrders';
 
-export default class AccountBreadOrder extends LightningElement {
+export default class DeliveryPlannerBreadOrder extends LightningElement {
   @api accountName;
   accountBreadOrders;
   error;

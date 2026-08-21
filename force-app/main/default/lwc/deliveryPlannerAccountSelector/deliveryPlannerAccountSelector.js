@@ -1,7 +1,7 @@
 import { LightningElement, api, wire } from 'lwc';
 import { gql, graphql, refreshGraphQL } from 'lightning/uiGraphQLApi';
 
-export default class AccountSelector extends LightningElement {
+export default class DeliveryPlannerAccountSelector extends LightningElement {
   _accountList;
 
   refreshList() {
