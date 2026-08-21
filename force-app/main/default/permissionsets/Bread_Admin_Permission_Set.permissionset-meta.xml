@@ -21,10 +21,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>BreadOrderController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>BreadOrdersSelector</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -50,6 +46,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>ContentVersionsSelector</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>DeliveryPlannerController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
