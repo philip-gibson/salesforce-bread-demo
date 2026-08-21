@@ -10,7 +10,7 @@
             <lightning-button variant="brand" label="Calculate Delivery Route" disabled={disableButton} onclick={calculateDeliveryRoute}></lightning-button>
             <lightning-button variant="destructive-text" label="Reset" onclick={resetDeliveryRoute}></lightning-button>
           </div>
-          <c-route-calculator coordinates={deliveryPoints} onvieworder={viewBreadOrder}></c-route-calculator>
+          <c-delivery-planner-route-calculator coordinates={deliveryPoints} onvieworder={viewBreadOrder}></c-delivery-planner-route-calculator>
         </div>
       </lightning-card>
     </span>
