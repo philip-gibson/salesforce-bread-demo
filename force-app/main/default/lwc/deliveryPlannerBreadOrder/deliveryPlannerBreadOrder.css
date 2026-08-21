@@ -21,6 +21,5 @@
 .total {
   font-size: var(--slds-g-font-scale-1);
   color: var(--slds-g-color-on-surface-2);
-  font-weight: 500;
-  margin-bottom: 1rem;
+  font-weight: 500;;
 }
