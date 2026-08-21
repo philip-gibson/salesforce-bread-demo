@@ -61,7 +61,7 @@ export default class DeliveryPlannerContainer extends LightningElement {
   }
 
   resetDeliveryRoute() {
-    this.template.querySelector('c-account-selector').resetAll();
+    this.template.querySelector('c-delivery-planner-account-selector').resetAll();
     this.template.querySelector('c-route-calculator').resetAll();
     this.deliveryPoints = [];
     this.breadOrderAccountId = null;
