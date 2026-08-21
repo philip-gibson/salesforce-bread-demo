@@ -57,12 +57,12 @@ export default class DeliveryPlannerContainer extends LightningElement {
 
   calculateDeliveryRoute() {
     if (this.disableButton) return;
-    this.template.querySelector('c-route-calculator').calculateRoute();
+    this.template.querySelector('c-delivery-planner-route-calculator').calculateRoute();
   }
 
   resetDeliveryRoute() {
     this.template.querySelector('c-delivery-planner-account-selector').resetAll();
-    this.template.querySelector('c-route-calculator').resetAll();
+    this.template.querySelector('c-delivery-planner-route-calculator').resetAll();
     this.deliveryPoints = [];
     this.breadOrderAccountId = null;
     this.breadOrderAccountName = null;
