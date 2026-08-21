@@ -129,9 +129,14 @@ public with sharing class DeliveryPlannerController {
    * Returns the 'Ready' Bread_Order__c records for the given Account ID.
    */
   @AuraEnabled(cacheable=true)
-  public static List<Bread_Order__c> getReadyOrders(Id accountId) {
+  public static List<BreadOrderDTO> getReadyBreadOrders(Id accountId) {
+    List<BreadOrderDTO> readyBreadOrders = new List<BreadOrderDTO>();
     try {
-      return BreadOrdersService.getBreadOrdersByAccountIdAndStatus(accountId, 'Ready');
+      List<Bread_Order__c> breadOrders = BreadOrdersService.getBreadOrdersByAccountIdAndStatus(accountId, 'Ready');
+      for (Bread_Order__c bo : breadOrders) {
+        readyBreadOrders.add(new BreadOrderDTO(bo));
+      }
+      return readyBreadOrders;
     } catch (Exception e) {
       throw new AuraHandledException(e.getMessage());
     }

@@ -17,12 +17,15 @@
         <ul>
           <template for:each={accountBreadOrders} for:item="order">
             <li key={order.Id} class="slds-p-bottom_x-small">
-              {order.Bread__r.Name} x {order.Quantity__c}
+              {order.breadName} x {order.quantity}
             </li>
           </template>
         </ul>
         <hr class="slds-m-vertical_medium" />
-        <p class="total">Total: ${total}</p>
+        <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
+          <p class="total">Total: ${total}</p>
+          <lightning-button variant="success" label="Delivered" onclick={handleDelivered}></lightning-button>
+        </div>
       </template>
       <p lwc:else>Click account to view bread orders for delivery.</p>
     </div>
