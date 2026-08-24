@@ -142,6 +142,18 @@ public with sharing class DeliveryPlannerController {
     }
   }
 
+  /**
+   * Set status for Bread_Order__c records to 'Delivered'.
+   */
+  @AuraEnabled
+  public static void setBreadOrdersDelivered(List<Id> breadOrderIds) {
+    try {
+      BreadOrdersService.setBreadOrdersToStatus(breadOrderIds, BreadOrders.STATUS_DELIVERED);
+    } catch (Exception e) {
+      throw new AuraHandledException(e.getMessage());
+    }
+  }
+
   private static List<Integer> buildIndexList(Integer n) {
     List<Integer> idx = new List<Integer>();
     for (Integer i = 0; i < n; i++) { idx.add(i); }
