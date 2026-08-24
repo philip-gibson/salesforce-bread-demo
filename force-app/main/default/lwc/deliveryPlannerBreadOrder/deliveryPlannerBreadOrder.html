@@ -15,7 +15,7 @@
       <template lwc:elseif={hasOrders}>
         <p class="account-name">{accountName}</p>
         <ul>
-          <template for:each={accountBreadOrders} for:item="order">
+          <template for:each={breadOrders} for:item="order">
             <li key={order.Id} class="slds-p-bottom_x-small">
               {order.breadName} x {order.quantity}
             </li>
@@ -26,6 +26,10 @@
           <p class="total">Total: ${total}</p>
           <lightning-button variant="success" label="Delivered" onclick={handleDelivered}></lightning-button>
         </div>
+      </template>
+      <template lwc:elseif={isDelivered}>
+        <p class="account-name">{accountName}</p>
+        <p>Delivered.</p>
       </template>
       <p lwc:else>Click account to view bread orders for delivery.</p>
     </div>

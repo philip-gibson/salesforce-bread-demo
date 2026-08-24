@@ -5,6 +5,8 @@
 public with sharing class BreadOrders extends fflib_SObjects implements IBreadOrders {
   public static final String STATUS_NEW = 'New';
   public static final String STATUS_READY = 'Ready';
+  public static final String STATUS_DELIVERED = 'Delivered';
+  public static final String STATUS_CANCELLED = 'Cancelled';
 
   public static IBreadOrders newInstance(List<Bread_Order__c> recordList) {
 		return (IBreadOrders) Application.Domain.newInstance(recordList);

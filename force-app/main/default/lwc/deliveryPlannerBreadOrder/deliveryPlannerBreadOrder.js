@@ -1,10 +1,13 @@
 import { LightningElement, api, wire } from 'lwc';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getReadyBreadOrders from '@salesforce/apex/DeliveryPlannerController.getReadyBreadOrders';
+import setBreadOrdersDelivered from '@salesforce/apex/DeliveryPlannerController.setBreadOrdersDelivered';
 
 export default class DeliveryPlannerBreadOrder extends LightningElement {
   @api accountName;
-  accountBreadOrders;
+  breadOrders;
   error;
+  delivered = false;
 
   _accountId;
 
@@ -14,42 +17,63 @@ export default class DeliveryPlannerBreadOrder extends LightningElement {
   }
   set accountId(value) {
     this._accountId = value;
-    this.accountBreadOrders = undefined;
+    this.breadOrders = undefined;
     this.error = undefined;
+    this.delivered = false;
   }
 
   @wire(getReadyBreadOrders, { accountId: '$accountId' })
   wiredOrders({ data, error }) {
     if (data) {
-      this.accountBreadOrders = data;
+      this.breadOrders = data;
       this.error = undefined;
     } else if (error) {
       this.error = error;
-      this.accountBreadOrders = undefined;
+      this.breadOrders = undefined;
     }
   }
 
   get total() {
-    return this.accountBreadOrders.reduce((total, order) => total + order.total, 0.00).toFixed(2)
+    return this.breadOrders.reduce((total, order) => total + order.total, 0.00).toFixed(2)
   }
 
   get hasOrders() {
-    return this.accountBreadOrders?.length > 0;
+    return this.breadOrders?.length > 0;
   }
 
   get isDelivered() {
-    return this.accountBreadOrders?.length === 0;
+    return this.delivered || this.breadOrders?.length === 0;
   }
 
   get isLoading() {
     return (
       this.accountId &&
-      this.accountBreadOrders === undefined &&
+      this.breadOrders === undefined &&
       this.error === undefined
     );
   }
 
-  handleDelivered() {
-    console.log('handle delivered.');
+  async handleDelivered() {
+    if (this.hasOrders) {
+      try {
+        const breadOrderIds = this.breadOrders.map(order => order.id);
+        await setBreadOrdersDelivered({ breadOrderIds });
+        this.delivered = true;
+        this.breadOrders = [];
+      } catch (error) {
+        this.showErrorToast(error);
+      }
+    }
+  }
+
+  showErrorToast(_error) {
+    this.dispatchEvent(
+      new ShowToastEvent({
+        title: 'Bread Orders could not be set as delivered',
+        message: 'An unexpected error occurred.',
+        variant: 'error',
+        mode: 'sticky',
+      })
+    );
   }
 }
