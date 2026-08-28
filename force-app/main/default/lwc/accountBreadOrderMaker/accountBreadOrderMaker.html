@@ -1,7 +1,9 @@
 <template>
     <lightning-card title="Bread Order" icon-name="utility:add">
-      <lightning-button variant="base" label="Reset" onclick={handleReset} slot="actions"></lightning-button>
-      <lightning-button class="slds-m-left_medium" label="Create Order" onclick={handleOrder} slot="actions"></lightning-button>
+      <lightning-button-group slot="actions">
+        <lightning-button label="Create Order" onclick={handleOrder}></lightning-button>
+        <lightning-button label="Reset" onclick={handleReset}></lightning-button>
+      </lightning-button-group>
       <div class="slds-p-horizontal_medium slds-m-bottom_medium">
         <div class="order-maker">
           <lightning-combobox

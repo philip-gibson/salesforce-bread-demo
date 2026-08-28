@@ -4,7 +4,7 @@ import { refreshApex } from '@salesforce/apex';
 import { publish, subscribe, unsubscribe, MessageContext } from 'lightning/messageService';
 import BreadOrderEvent from '@salesforce/messageChannel/BreadOrderEvent__c';
 import getNewBreadOrders from '@salesforce/apex/AccountController.getNewBreadOrders';
-import setBreadOrdersToReady from '@salesforce/apex/AccountController.setBreadOrdersToReady';
+import setBreadOrdersToStatus from '@salesforce/apex/AccountController.setBreadOrdersToStatus';
 
 export default class AccountBreadOrderPreparation extends LightningElement {
   @api recordId;
@@ -53,7 +53,7 @@ export default class AccountBreadOrderPreparation extends LightningElement {
   }
 
   async handleMessage(message) {
-    if (message?.eventType === 'created') {
+    if (message?.accountId === this.recordId && message?.eventType === 'created') {
       await refreshApex(this.wiredOrdersResult);
     }
   }
@@ -89,8 +89,21 @@ export default class AccountBreadOrderPreparation extends LightningElement {
     if (this.someSelected) {
       try {
         const breadOrderIds = this.newBreadOrders.filter(order => order.selected).map(order => order.id);
-        await setBreadOrdersToReady({ breadOrderIds });
-        publish(this.messageContext, BreadOrderEvent, { eventType: 'ready' });
+        await setBreadOrdersToStatus({ breadOrderIds, status: 'Ready' });
+        publish(this.messageContext, BreadOrderEvent, { eventType: 'ready', accountId: this.recordId });
+        await refreshApex(this.wiredOrdersResult);
+      } catch (error) {
+        this.showErrorToast(error);
+      }
+    }
+  }
+
+  async cancelled() {
+    if (this.someSelected) {
+      try {
+        const breadOrderIds = this.newBreadOrders.filter(order => order.selected).map(order => order.id);
+        await setBreadOrdersToStatus({ breadOrderIds, status: 'Cancelled' });
+        publish(this.messageContext, BreadOrderEvent, { eventType: 'cancelled', accountId: this.recordId });
         await refreshApex(this.wiredOrdersResult);
       } catch (error) {
         this.showErrorToast(error);

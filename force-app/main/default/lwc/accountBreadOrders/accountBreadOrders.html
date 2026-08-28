@@ -3,7 +3,7 @@
     <div class="slds-p-horizontal_medium">
       <lightning-tabset>
         <lightning-tab label="Ready for Delivery">
-          <template lwc:if={hasOrders}>
+          <template lwc:if={hasReadyOrders}>
             <ul>
               <template for:each={ready} for:item="order">
                 <li key={order.Id} class="slds-p-bottom_x-small">

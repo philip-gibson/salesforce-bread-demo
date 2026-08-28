@@ -4,7 +4,11 @@
     <isExposed>false</isExposed>
     <description>Message Channel for Bread_Order__c domain events. Subscribers distinguish events via the eventType payload field: 'created' | 'ready'.</description>
     <lightningMessageFields>
-        <description>The type of Bread Order event: 'created' when a new order is created, 'ready' when orders are set to Ready.</description>
+        <description>The type of Bread Order event: 'created' when a new order is created, 'ready' when orders are set to Ready, 'cancelled' when orders are set to Cancelled.</description>
         <fieldName>eventType</fieldName>
+    </lightningMessageFields>
+    <lightningMessageFields>
+        <description>The Account ID of the updated Bread Order</description>
+        <fieldName>accountId</fieldName>
     </lightningMessageFields>
 </LightningMessageChannel>

@@ -1,8 +1,10 @@
 import { LightningElement, api, wire } from 'lwc';
 import { refreshApex } from '@salesforce/apex';
-import { subscribe, unsubscribe, MessageContext } from 'lightning/messageService';
+import { subscribe, unsubscribe, MessageContext, APPLICATION_SCOPE } from 'lightning/messageService';
 import BreadOrderEvent from '@salesforce/messageChannel/BreadOrderEvent__c';
 import getBreadOrdersByAccountId from '@salesforce/apex/AccountController.getBreadOrdersByAccountId';
+
+const REFRESH_EVENT_TYPES = ['ready', 'delivered', 'cancelled'];
 
 export default class AccountBreadOrders extends LightningElement {
   @api recordId;
@@ -34,6 +36,7 @@ export default class AccountBreadOrders extends LightningElement {
         this.messageContext,
         BreadOrderEvent,
         (message) => this.handleMessage(message),
+        { scope: APPLICATION_SCOPE },
       );
     }
   }
@@ -44,7 +47,7 @@ export default class AccountBreadOrders extends LightningElement {
   }
 
   async handleMessage(message) {
-    if (message?.eventType === 'ready') {
+    if (message?.accountId === this.recordId && REFRESH_EVENT_TYPES.includes(message?.eventType)) {
       await refreshApex(this.wiredOrdersResult);
     }
   }
@@ -57,8 +60,8 @@ export default class AccountBreadOrders extends LightningElement {
     this.unsubscribeToMessageChannel();
   }
 
-  get hasOrders() {
-    return this.accountBreadOrders && this.accountBreadOrders.length > 0;
+  get hasReadyOrders() {
+    return this.ready.length > 0;
   }
 
   get ready() {
