@@ -1,6 +1,9 @@
 <template>
   <lightning-card title="Bread Orders - In Progress" icon-name="utility:breadcrumbs">
-    <lightning-button label="Ready for Delivery" disabled={disabled} onclick={readyForDelivery} slot="actions"></lightning-button>
+    <lightning-button-group slot="actions">
+      <lightning-button label="Ready for Delivery" disabled={disabled} onclick={readyForDelivery}></lightning-button>
+      <lightning-button label="Cancel" variant="destructive" icon-name="utility:delete" disabled={disabled} onclick={cancelled}></lightning-button>
+    </lightning-button-group>
     <div class="slds-p-horizontal_medium">
       <template lwc:if={hasOrders}>
         <ul class="slds-p-top_xx-small">

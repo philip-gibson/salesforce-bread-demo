@@ -12,12 +12,16 @@ public with sharing class AccountController {
   }
 
   /**
-   * Set status for Bread_Order__c records to 'Ready'.
+   * Set Status__c for Bread_Order__c records to status.
    */
   @AuraEnabled
-  public static void setBreadOrdersToReady(List<Id> breadOrderIds) {
+  public static void setBreadOrdersToStatus(List<Id> breadOrderIds, String status) {
     try {
-      BreadOrdersService.setBreadOrdersToStatus(breadOrderIds, BreadOrders.STATUS_READY);
+      if (status == BreadOrders.STATUS_READY) {
+        BreadOrdersService.setBreadOrdersToStatus(breadOrderIds, BreadOrders.STATUS_READY);
+      } else if (status == BreadOrders.STATUS_CANCELLED) {
+        BreadOrdersService.setBreadOrdersToStatus(breadOrderIds, BreadOrders.STATUS_CANCELLED);
+      }
     } catch (Exception e) {
       throw new AuraHandledException(e.getMessage());
     }

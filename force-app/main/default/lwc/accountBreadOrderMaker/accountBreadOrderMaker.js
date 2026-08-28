@@ -71,7 +71,7 @@ export default class AccountBreadOrderMaker extends LightningElement {
         await createBreadOrder({
           breadOrder: { accountId: this.recordId, breadId: this.selectedBread, quantity: this.quantity }
         });
-        publish(this.messageContext, BreadOrderEvent, { eventType: 'created' });
+        publish(this.messageContext, BreadOrderEvent, { eventType: 'created', accountId: this.recordId });
         this.handleReset();
       } catch (error) {
         this.showErrorToast(error);

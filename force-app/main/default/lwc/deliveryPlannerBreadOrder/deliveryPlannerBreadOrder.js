@@ -1,5 +1,7 @@
 import { LightningElement, api, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { publish, MessageContext } from 'lightning/messageService';
+import BreadOrderEvent from '@salesforce/messageChannel/BreadOrderEvent__c';
 import getReadyBreadOrders from '@salesforce/apex/DeliveryPlannerController.getReadyBreadOrders';
 import setBreadOrdersDelivered from '@salesforce/apex/DeliveryPlannerController.setBreadOrdersDelivered';
 
@@ -33,6 +35,9 @@ export default class DeliveryPlannerBreadOrder extends LightningElement {
     }
   }
 
+  @wire(MessageContext)
+  messageContext;
+
   get total() {
     return this.breadOrders.reduce((total, order) => total + order.total, 0.00).toFixed(2)
   }
@@ -58,6 +63,7 @@ export default class DeliveryPlannerBreadOrder extends LightningElement {
       try {
         const breadOrderIds = this.breadOrders.map(order => order.id);
         await setBreadOrdersDelivered({ breadOrderIds });
+        publish(this.messageContext, BreadOrderEvent, { eventType: 'delivered', accountId: this.accountId });
         this.delivered = true;
         this.breadOrders = [];
       } catch (error) {
