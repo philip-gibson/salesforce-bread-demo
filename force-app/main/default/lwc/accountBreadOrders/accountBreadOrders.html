@@ -14,25 +14,27 @@
             <hr class="slds-m-vertical_medium" />
             <p class="total">Total: ${total}</p>
           </template>
-          <p lwc:else>No bread orders made.</p>
+          <p lwc:else>No bread orders ready for delivery.</p>
         </lightning-tab>
         <lightning-tab label="Delivered">
-          <ul>
+          <ul lwc:if={hasDeliveredOrders}>
             <template for:each={delivered} for:item="order">
               <li key={order.Id} class="slds-p-bottom_x-small">
                 {order.Bread__r.Name} x {order.Quantity__c}
               </li>
             </template>
           </ul>
+          <p lwc:else>No bread orders delivered.</p>
         </lightning-tab>
         <lightning-tab label="Cancelled">
-          <ul>
+          <ul lwc:if={hasCancelledOrders}>
             <template for:each={cancelled} for:item="order">
               <li key={order.Id} class="slds-p-bottom_x-small">
                 {order.Bread__r.Name} x {order.Quantity__c}
               </li>
             </template>
           </ul>
+          <p lwc:else>No bread orders cancelled.</p>
         </lightning-tab>
       </lightning-tabset>
     </div>

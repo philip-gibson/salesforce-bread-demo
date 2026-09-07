@@ -72,8 +72,16 @@ export default class AccountBreadOrders extends LightningElement {
     return this.ready.reduce((total, order) => total + order.Total__c, 0.00).toFixed(2)
   }
 
+  get hasDeliveredOrders() {
+    return this.delivered.length > 0;
+  }
+
   get delivered() {
     return this.accountBreadOrders ? this.accountBreadOrders.filter(order => order.Status__c.toLowerCase() === 'delivered') : [];
+  }
+
+  get hasCancelledOrders() {
+    return this.cancelled.length > 0;
   }
 
   get cancelled() {
