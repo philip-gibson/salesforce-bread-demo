@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <LightningMessageChannel xmlns="http://soap.sforce.com/2006/04/metadata">
-    <masterLabel>Bread Order Event - Message Channel</masterLabel>
+    <description>Message Channel for Bread_Order__c domain events. Subscribers distinguish events via the eventType payload field: &apos;created&apos; | &apos;ready&apos;.</description>
     <isExposed>false</isExposed>
-    <description>Message Channel for Bread_Order__c domain events. Subscribers distinguish events via the eventType payload field: 'created' | 'ready'.</description>
     <lightningMessageFields>
-        <description>The type of Bread Order event: 'created' when a new order is created, 'ready' when orders are set to Ready, 'cancelled' when orders are set to Cancelled.</description>
+        <description>The type of Bread Order event: &apos;created&apos; when a new order is created, &apos;ready&apos; when orders are set to Ready, &apos;cancelled&apos; when orders are set to Cancelled.</description>
         <fieldName>eventType</fieldName>
     </lightningMessageFields>
     <lightningMessageFields>
         <description>The Account ID of the updated Bread Order</description>
         <fieldName>accountId</fieldName>
     </lightningMessageFields>
+    <masterLabel>Bread Order Event - Message Channel</masterLabel>
 </LightningMessageChannel>

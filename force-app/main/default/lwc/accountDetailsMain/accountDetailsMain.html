@@ -1,0 +1,27 @@
+<template>
+  <lightning-card>
+    <div class="slds-p-horizontal_small slds-grid slds-gutters slds-wrap">
+      <div class="slds-col slds-size_1-of-2">
+        <lightning-record-form
+          object-api-name={objectApiName}
+          record-id={recordId}
+          fields={accountFields}
+          mode="view"
+          columns="1">
+        </lightning-record-form>
+        <div class="slds-scrollable_none slds-m-top_medium">
+          <lightning-map map-markers={mapMarkers} zoom-level={zoomLevel}></lightning-map>
+        </div>
+      </div>
+      <div class="slds-col slds-size_1-of-2">
+        <lightning-record-form
+          object-api-name={objectApiName}
+          record-id={recordId}
+          fields={breadOrderFields}
+          mode="view"
+          columns="1">
+        </lightning-record-form>
+      </div>
+    </div>
+  </lightning-card>
+</template>

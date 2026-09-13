@@ -1,4 +1,5 @@
 import { LightningElement, api, wire } from 'lwc';
+import { NavigationMixin } from 'lightning/navigation';
 import { refreshApex } from '@salesforce/apex';
 import { subscribe, unsubscribe, MessageContext, APPLICATION_SCOPE } from 'lightning/messageService';
 import BreadOrderEvent from '@salesforce/messageChannel/BreadOrderEvent__c';
@@ -6,7 +7,7 @@ import getBreadOrdersByAccountId from '@salesforce/apex/AccountController.getBre
 
 const REFRESH_EVENT_TYPES = ['ready', 'delivered', 'cancelled'];
 
-export default class AccountBreadOrders extends LightningElement {
+export default class AccountBreadOrders extends NavigationMixin(LightningElement) {
   @api recordId;
 
   subscription;
@@ -68,10 +69,6 @@ export default class AccountBreadOrders extends LightningElement {
     return this.accountBreadOrders ? this.accountBreadOrders.filter(order => order.Status__c.toLowerCase() === 'ready') : [];
   }
 
-  get total() {
-    return this.ready.reduce((total, order) => total + order.Total__c, 0.00).toFixed(2)
-  }
-
   get hasDeliveredOrders() {
     return this.delivered.length > 0;
   }
@@ -86,5 +83,17 @@ export default class AccountBreadOrders extends LightningElement {
 
   get cancelled() {
     return this.accountBreadOrders ? this.accountBreadOrders.filter(order => order.Status__c.toLowerCase() === 'cancelled') : [];
+  }
+
+  goToDeliveries() {
+    this[NavigationMixin.Navigate]({
+      type: 'standard__navItemPage',
+      attributes: {
+        apiName: 'Delivery_Planner',
+      },
+      state: {
+        c__recordId: this.recordId,
+      }
+    });
   }
 }

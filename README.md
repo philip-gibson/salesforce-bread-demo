@@ -1,6 +1,8 @@
 # salesforce-bread-demo
 Delivery Planner - a Lightning App Page with LWC.
 
+Developer (Demo) Org, login at https://orgfarm-5d48ce5bda-dev-ed.develop.my.salesforce.com
+
 Select the Accounts to deliver Bread Orders to, then calculate the shortest round-trip delivery route.
 
 ![Delivery Planner](./scripts/img/image1.png)

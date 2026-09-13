@@ -11,8 +11,13 @@
                 </li>
               </template>
             </ul>
-            <hr class="slds-m-vertical_medium" />
-            <p class="total">Total: ${total}</p>
+            <div class="slds-text-align_center">
+              <lightning-button 
+                label="Deliver Bread Orders" 
+                variant="brand" 
+                onclick={goToDeliveries}>
+              </lightning-button>
+            </div>
           </template>
           <p lwc:else>No bread orders ready for delivery.</p>
         </lightning-tab>
