@@ -1,10 +1,19 @@
 import { LightningElement, wire } from 'lwc';
+import { CurrentPageReference } from 'lightning/navigation';
 import { gql, graphql } from 'lightning/uiGraphQLApi';
 
 export default class DeliveryPlannerContainer extends LightningElement {
   deliveryPoints = [];
   breadOrderAccountId;
   breadOrderAccountName;
+  selectedAccountId;
+
+  @wire(CurrentPageReference)
+  getPageReference(pageRef) {
+    if (pageRef?.state) {
+      this.selectedAccountId = pageRef.state.c__recordId;
+    }
+  }
 
   @wire(graphql, {
     query: gql`

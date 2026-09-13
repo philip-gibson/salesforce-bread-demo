@@ -1,7 +1,10 @@
 <template>
   <c-delivery-planner-grid>
     <span slot="select-accounts">
-      <c-delivery-planner-account-selector onselected={updateDeliveryPoints}></c-delivery-planner-account-selector>
+      <c-delivery-planner-account-selector
+        onselected={updateDeliveryPoints}
+        selected-account-id={selectedAccountId}>
+      </c-delivery-planner-account-selector>
     </span>
     <span slot="calculate-route">
       <lightning-card hide-header label="Calculate Delivery Route">
