@@ -2,6 +2,7 @@ import { LightningElement, api, wire } from 'lwc';
 import { gql, graphql, refreshGraphQL } from 'lightning/uiGraphQLApi';
 
 export default class DeliveryPlannerAccountSelector extends LightningElement {
+  @api selectedAccountId;
   _accountList;
 
   refreshList() {
@@ -34,6 +35,7 @@ export default class DeliveryPlannerAccountSelector extends LightningElement {
   }
 
   @api resetAll() {
+    this.selectedAccountId = null;
     Array.from(this.template.querySelectorAll("lightning-input"))
       .filter(input => input.type === "checkbox")
       .forEach(input => input.checked = false);
@@ -45,11 +47,20 @@ export default class DeliveryPlannerAccountSelector extends LightningElement {
           uiapi {
             query {
               Account (
-                first: 50
+                first: 25
                 where: {
                   and: [
                     { ShippingLongitude: { ne: null } }
                     { Name: { ne: "Salesforce Bakery" } }
+                    { Id: {
+                        inq: {
+                          Bread_Order__c: {
+                            Status__c: { eq: "Ready" }
+                          }
+                          ApiName: "Account__c"
+                        }
+                      }
+                    }
                   ]
                 }
                 orderBy: { Name: { order: ASC } }
@@ -87,6 +98,15 @@ export default class DeliveryPlannerAccountSelector extends LightningElement {
       ShippingPostalCode: edge.node.ShippingAddress?.ShippingPostalCode?.value,
       ShippingLatitude: edge.node.ShippingAddress?.ShippingLatitude?.value,
       ShippingLongitude: edge.node.ShippingAddress?.ShippingLongitude?.value,
+      Checked: edge.node.Id === this.selectedAccountId,
     })) ?? [];
   };
+
+  get maxAccounts() {
+    return this._accountList?.length === 25;
+  }
+
+  renderedCallback() {
+    if (this._accountList && this.selectedAccountId) this.handleCheckboxChange();
+  }
 }

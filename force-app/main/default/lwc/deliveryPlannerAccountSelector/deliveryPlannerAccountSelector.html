@@ -1,17 +1,19 @@
 <template>
   <lightning-card hide-header label="Select Accounts for Delivery">
     <div class="slds-m-around_medium">
-      <div class="slds-grid">
-        <h3 class="text-title">Select Accounts for Delivery</h3>
-        <c-new-account onsuccess={refreshList} class="button-positioning"></c-new-account>
+      <div class="header">
+        <h3 class="header-text">Select Accounts for Delivery</h3>
       </div>
       <ul class="slds-p-top_x-small">
         <template for:each={accounts} for:item="account">
           <li key={account.Id} class="slds-p-bottom_x-small">
-            <lightning-input type="checkbox" label={account.Name} data-id={account.Id} onchange={handleCheckboxChange}></lightning-input>
+            <lightning-input type="checkbox" label={account.Name} data-id={account.Id} checked={account.Checked} onchange={handleCheckboxChange}></lightning-input>
           </li>
         </template>
       </ul>
+      <template lwc:if={maxAccounts}>
+        <p class="slds-text-color_error">* A maximum of 25 Accounts are displayed for demo purposes only.</p>
+      </template>
     </div>
   </lightning-card>
 </template>
