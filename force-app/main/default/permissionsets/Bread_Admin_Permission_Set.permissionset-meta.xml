@@ -21,15 +21,15 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>BreadOrders</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>BreadOrdersSelector</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>BreadOrdersService</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>BreadOrders</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -345,6 +345,16 @@
         <enabled>true</enabled>
         <externalCredentialPrincipal>OpenRouteService-ORS_Api_Key</externalCredentialPrincipal>
     </externalCredentialPrincipalAccesses>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.Cancelled_Bread_Orders__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.Delivered_Bread_Orders__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Bread_Order__c.Bread__c</field>
