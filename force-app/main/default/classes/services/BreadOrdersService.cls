@@ -17,8 +17,8 @@ public with sharing class BreadOrdersService {
     return BreadOrdersSelector.getBreadOrdersByAccountId(recordId);
   }
 
-  public static List<Bread_Order__c> getBreadOrdersByAccountIdAndStatus(Id accountId, String status) {
-    return BreadOrdersSelector.getBreadOrdersByAccountIdAndStatus(accountId, status);
+  public static List<Bread_Order__c> getBreadOrdersByAccountIdsAndStatus(List<Id> accountIds, String status) {
+    return BreadOrdersSelector.getBreadOrdersByAccountIdsAndStatus(accountIds, status);
   }
 
   public static List<Bread_Order__c> setBreadOrdersToStatus(List<Id> breadOrderIds, String status) {

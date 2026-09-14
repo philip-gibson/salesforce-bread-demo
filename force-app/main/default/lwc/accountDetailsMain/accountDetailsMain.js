@@ -31,9 +31,4 @@ export default class AccountDetailsMain extends LightningElement {
       },
     ];
   }
-
-  connectedCallback() {
-    console.log('SHIPPING_STREET_FIELD: ', getFieldValue(this.account.data, SHIPPING_STREET_FIELD));
-    console.log('SHIPPING_POSTAL_CODE_FIELD: ', getFieldValue(this.account.data, SHIPPING_POSTAL_CODE_FIELD));
-  }
 }

@@ -21,7 +21,7 @@ const initRouteSummary = {
 let leafletLoaded = false;
 
 export default class DeliveryPlannerRouteCalculator extends LightningElement {
-  @api coordinates = [];
+  @api deliveries  = [];
   logo             = breadBasket;
   isLoading        = false;
   errorMessage     = '';
@@ -77,7 +77,7 @@ export default class DeliveryPlannerRouteCalculator extends LightningElement {
     this.routeSummary = initRouteSummary;
 
     // Validate coords
-    const filled = this.coordinates.filter(c => c.lat !== '' && c.lng !== '');
+    const filled = this.deliveries.filter(c => c.lat !== '' && c.lng !== '');
     if (filled.length < 2) {
       this.errorMessage = 'Please select at least one delivery point.';
       return;
@@ -107,7 +107,7 @@ export default class DeliveryPlannerRouteCalculator extends LightningElement {
       const { orderedJobIds, orderedCoords } = optimResult;
       // Build human-readable stop order label
       const orderedJobNames = orderedJobIds.map(id => {
-        const stop = this.coordinates.find(c => c.id === id);
+        const stop = this.deliveries.find(c => c.id === id);
         return stop ? { name: stop.name, accountId: stop.accountId } : { name: `Stop ${id}` };
       });
       const stopLabels = [{ name: 'Salesforce Bakery' }, ...orderedJobNames, { name: 'Salesforce Bakery' }];

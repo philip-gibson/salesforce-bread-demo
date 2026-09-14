@@ -33,7 +33,8 @@ public with sharing class AccountController {
   @AuraEnabled(cacheable=true)
   public static List<Bread_Order__c> getNewBreadOrders(Id accountId) {
     try {
-      return BreadOrdersService.getBreadOrdersByAccountIdAndStatus(accountId, BreadOrders.STATUS_NEW);
+      List<Id> accountIds = new List<Id>{accountId};
+      return BreadOrdersService.getBreadOrdersByAccountIdsAndStatus(accountIds, BreadOrders.STATUS_NEW);
     } catch (Exception e) {
       throw new AuraHandledException(e.getMessage());
     }
