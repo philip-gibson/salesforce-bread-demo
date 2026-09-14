@@ -13,12 +13,12 @@
             <lightning-button variant="brand" label="Calculate Delivery Route" disabled={disableButton} onclick={calculateDeliveryRoute}></lightning-button>
             <lightning-button variant="destructive-text" label="Reset" onclick={resetDeliveryRoute}></lightning-button>
           </div>
-          <c-delivery-planner-route-calculator coordinates={deliveryPoints} onvieworder={viewBreadOrder}></c-delivery-planner-route-calculator>
+          <c-delivery-planner-route-calculator deliveries={deliveryPoints} onvieworder={viewBreadOrder}></c-delivery-planner-route-calculator>
         </div>
       </lightning-card>
     </span>
     <span slot="account-details">
-      <c-delivery-planner-bread-order account-id={breadOrderAccountId} account-name={breadOrderAccountName}></c-delivery-planner-bread-order>
+      <c-delivery-planner-bread-orders></c-delivery-planner-bread-orders>
     </span>
   </c-delivery-planner-grid>
 </template>

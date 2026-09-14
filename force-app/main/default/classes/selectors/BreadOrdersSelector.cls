@@ -17,19 +17,19 @@ public with sharing class BreadOrdersSelector {
   }
 
   /**
-   * Returns the Bread_Order__c detail records for the given Account ID and Status.
+   * Returns the Bread_Order__c detail records for the given Account IDs and Status.
    */
-  public static List<Bread_Order__c> getBreadOrdersByAccountIdAndStatus(Id accountId, String status) {
+  public static List<Bread_Order__c> getBreadOrdersByAccountIdsAndStatus(List<Id> accountIds, String status) {
     BreadOrders.validateStatus(status);
 
-    if (accountId == null) {
+    if (accountIds == null) {
       return new List<Bread_Order__c>();
     }
 
     return [
-      SELECT Id, Total__c, Status__c, Quantity__c, Bread__r.Name
+      SELECT Id, Account__c, Account__r.Name, Total__c, Status__c, Quantity__c, Bread__r.Name
       FROM Bread_Order__c
-      WHERE Account__c = :accountId
+      WHERE Account__c IN :accountIds
         AND Status__c = :status
       WITH USER_MODE
       ORDER BY Bread__r.Name

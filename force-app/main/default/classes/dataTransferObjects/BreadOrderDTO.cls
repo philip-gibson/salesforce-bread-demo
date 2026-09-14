@@ -1,5 +1,6 @@
 public class BreadOrderDTO {
   @AuraEnabled public Id accountId { get; set; }
+  @AuraEnabled public String accountName { get; set; }
   @AuraEnabled public Id breadId { get; set; }
   @AuraEnabled public String breadName { get; set; }
   @AuraEnabled public Id id { get; set; }
@@ -15,6 +16,8 @@ public class BreadOrderDTO {
 
   public BreadOrderDTO(Bread_Order__c bo) {
     this.id = bo.Id;
+    this.accountId = bo.Account__c;
+    this.accountName = bo.Account__r.Name;
     this.breadName = bo.Bread__r.Name;
     this.total = bo.Total__c;
     this.quantity = (bo.Quantity__c != null) ? bo.Quantity__c.intValue() : null;

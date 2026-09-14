@@ -45,11 +45,10 @@ export default class DeliveryPlannerContainer extends LightningElement {
   }) salesforceBakery;
 
   updateDeliveryPoints(event) {
-    const bakeryAccount = this.bakeryAccountData();
-    this.deliveryPoints = [bakeryAccount, ...event.detail];
+    this.deliveryPoints = [this.bakeryAccount, ...event.detail];
   }
 
-  bakeryAccountData() {
+  get bakeryAccount() {
     const account = this.salesforceBakery?.data?.uiapi?.query?.Account?.edges?.[0]?.node;
     return account ? {
       id: 0,
@@ -67,11 +66,13 @@ export default class DeliveryPlannerContainer extends LightningElement {
   calculateDeliveryRoute() {
     if (this.disableButton) return;
     this.template.querySelector('c-delivery-planner-route-calculator').calculateRoute();
+    this.template.querySelector('c-delivery-planner-bread-orders').getBreadOrders(this.breadOrderAccountIds);
   }
 
   resetDeliveryRoute() {
     this.template.querySelector('c-delivery-planner-account-selector').resetAll();
     this.template.querySelector('c-delivery-planner-route-calculator').resetAll();
+    this.template.querySelector('c-delivery-planner-bread-orders').resetAll();
     this.deliveryPoints = [];
     this.breadOrderAccountId = null;
     this.breadOrderAccountName = null;
@@ -84,5 +85,10 @@ export default class DeliveryPlannerContainer extends LightningElement {
 
   get disableButton() {
     return this.deliveryPoints.length < 2 || this.deliveryPoints.length > 11;
+  }
+
+  get breadOrderAccountIds() {
+    const accounts = this.deliveryPoints.filter(account => account.accountId != this.bakeryAccount.accountId);
+    return accounts.map(account => account.accountId);
   }
 }

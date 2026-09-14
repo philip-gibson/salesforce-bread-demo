@@ -129,12 +129,20 @@ public with sharing class DeliveryPlannerController {
    * Returns the 'Ready' Bread_Order__c records for the given Account ID.
    */
   @AuraEnabled(cacheable=true)
-  public static List<BreadOrderDTO> getReadyBreadOrders(Id accountId) {
-    List<BreadOrderDTO> readyBreadOrders = new List<BreadOrderDTO>();
+  public static List<ReadyBreadOrdersDTO> getReadyBreadOrders(List<Id> accountIds) {
+    List<ReadyBreadOrdersDTO> readyBreadOrders = new List<ReadyBreadOrdersDTO>();
+    Map<Id, List<BreadOrderDTO>> breadOrdersMap = new Map<Id, List<BreadOrderDTO>>();
     try {
-      List<Bread_Order__c> breadOrders = BreadOrdersService.getBreadOrdersByAccountIdAndStatus(accountId, 'Ready');
+      List<Bread_Order__c> breadOrders = BreadOrdersService.getBreadOrdersByAccountIdsAndStatus(accountIds, 'Ready');
       for (Bread_Order__c bo : breadOrders) {
-        readyBreadOrders.add(new BreadOrderDTO(bo));
+        if (!breadOrdersMap.containsKey(bo.Account__c)) {
+          breadOrdersMap.put(bo.Account__c, new List<BreadOrderDTO>());
+        }
+        breadOrdersMap.get(bo.Account__c).add(new BreadOrderDTO(bo));
+      }
+      for (Id accountId : accountIds) {
+        List<BreadOrderDTO> bos = breadOrdersMap.get(accountId);
+        readyBreadOrders.add(new ReadyBreadOrdersDTO(accountId, bos[0].accountName, bos));
       }
       return readyBreadOrders;
     } catch (Exception e) {
@@ -158,5 +166,27 @@ public with sharing class DeliveryPlannerController {
     List<Integer> idx = new List<Integer>();
     for (Integer i = 0; i < n; i++) { idx.add(i); }
     return idx;
+  }
+
+  private static Decimal getTotal(List<BreadOrderDTO> breadOrders) {
+    Decimal total = 0;
+    for (BreadOrderDTO bo : breadOrders) {
+      total += bo.total;
+    }
+    return total;
+  }
+
+  public class ReadyBreadOrdersDTO {
+    @AuraEnabled public Id accountId;
+    @AuraEnabled public String accountName;
+    @AuraEnabled public Decimal total;
+    @AuraEnabled public List<BreadOrderDTO> breadOrders;
+
+    public ReadyBreadOrdersDTO(Id accountId, String accountName, List<BreadOrderDTO> breadOrders) {
+      this.accountId = accountId;
+      this.accountName = accountName;
+      this.breadOrders = breadOrders;
+      this.total = getTotal(breadOrders);
+    }
   }
 }

@@ -1,0 +1,31 @@
+<template>
+  <lightning-card hide-header label="View Bread Orders">
+    <div class="slds-m-around_medium">
+      <div class="header">
+        <h3 class="header-text">Bread Orders for Delivery</h3>
+      </div>
+      <template lwc:if={hasBreadOrders}>
+        <ul>
+          <template for:each={displayBreadOrders} for:item="order">
+            <li key={order.accountId} class="slds-p-bottom_large">
+              <h3 class="header-text">{order.accountName}</h3>
+              <ul>
+                <template for:each={order.breadOrders} for:item="bo">
+                  <li key={bo.accountId}>
+                    <p class={order.textClass}>{bo.breadName} x {bo.quantity}</p>
+                  </li>
+                </template>
+              </ul>
+              <hr class="slds-m-vertical_xx-small" />
+              <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
+                <p class="total">Total: ${order.total}</p>
+                <lightning-button variant="success" label="Delivered" data-id={order.accountId} disabled={order.disabled} onclick={handleDelivered}></lightning-button>
+              </div>
+            </li>
+          </template>
+        </ul>
+      </template>
+      <p lwc:else>N/A</p>
+    </div>
+  </lightning-card>
+</template>
