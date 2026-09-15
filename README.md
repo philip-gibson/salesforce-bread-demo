@@ -5,7 +5,9 @@ Developer (Demo) Org, login at https://orgfarm-5d48ce5bda-dev-ed.develop.my.sale
 
 Select the Accounts to deliver Bread Orders to, then calculate the shortest round-trip delivery route.
 
-![Delivery Planner](./scripts/img/breadDemo.png)
+![Delivery Planner](./scripts/img/deliveryPlanner.png)
+![Account](./scripts/img/account.png)
+![Bread](./scripts/img/bread.png)
 
 Bread data from https://www.finedininglovers.com/explore/articles/15-different-kinds-bread-make
 
