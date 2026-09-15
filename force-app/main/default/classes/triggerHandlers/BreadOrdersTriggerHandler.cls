@@ -1,4 +1,7 @@
 public with sharing class BreadOrdersTriggerHandler extends fflib_SObjectDomain {
+
+  @TestVisible private static final String REQUIRED_STATE = 'California';
+
   public BreadOrdersTriggerHandler(List<SObject> sObjectList) {
     super(sObjectList);
   }
@@ -14,6 +17,10 @@ public with sharing class BreadOrdersTriggerHandler extends fflib_SObjectDomain 
 	 **/
   public override void onApplyDefaults() {
     setStatusAndUnitPrice();
+  }
+
+  public override void onBeforeInsert() {
+    validateStateOfCalifornia();
   }
 
   /**
@@ -50,6 +57,30 @@ public with sharing class BreadOrdersTriggerHandler extends fflib_SObjectDomain 
     for (Bread_Order__c order : newOrders) {
       if (order.Bread__c != null && breadsById.containsKey(order.Bread__c)) {
         order.Unit_Price__c = breadsById.get(order.Bread__c).Unit_Price__c;
+      }
+    }
+  }
+
+  /**
+   * Checks the Account__c has shipping state "California".
+   */
+  private void validateStateOfCalifornia() {
+    List<Bread_Order__c> orders = (List<Bread_Order__c>) Records;
+    Set<Id> accountIds = new Set<Id>();
+    for (Bread_Order__c order : orders) {
+      if (order.Account__c != null) {
+        accountIds.add(order.Account__c);
+      }
+    }
+
+    Map<Id, Account> accMap = new Map<Id, Account>([SELECT Id, ShippingState FROM Account WHERE Id IN :accountIds]);
+    
+    for (Bread_Order__c order : orders) {
+      Account acc = accMap.get(order.Account__c);
+      if (acc == null || acc.ShippingState != REQUIRED_STATE) {
+        order.addError(
+          'Bread Orders are only for Accounts whose Shipping State is California.'
+        );
       }
     }
   }
