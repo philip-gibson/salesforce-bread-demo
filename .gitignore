@@ -47,6 +47,9 @@ $RECYCLE.BIN/
 **/.venv/
 **/venv/
 
+# Salesforce - AppSwitcher
+**/*.appMenu-meta.xml
+
 # Salesforce - Profiles
 **/*.profile-meta.xml
 

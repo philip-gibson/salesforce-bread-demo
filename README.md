@@ -15,6 +15,7 @@ House keeping:
 1. `"language": "en_US"` in `config/project-scratch-def.json` will create a scratch org in English
 2. If you need to change the org default language to English run the Anonymous Apex script at `scripts/apex/change-language-to-english.apex`
 3. ORS API Key is not saved in the repo. Get the key from https://account.heigit.org/login or get a new key at https://openrouteservice.org/dev/#/signup
+4. The Bread app image is saved in `scripts/img/breadAppImage.png`
 
 Setup:
 1. In VS Code do `SFDX Push Source to Default Org`

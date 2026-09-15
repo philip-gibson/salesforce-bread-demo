@@ -13,6 +13,9 @@ package.xml
 
 node_modules/
 
+# AppSwitcher
+**/*.appMenu-meta.xml
+
 # Profiles
 **/*.profile-meta.xml
 
