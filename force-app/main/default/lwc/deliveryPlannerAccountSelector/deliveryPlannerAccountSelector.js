@@ -50,6 +50,7 @@ export default class DeliveryPlannerAccountSelector extends LightningElement {
                 first: 25
                 where: {
                   and: [
+                    { ShippingState: { eq: "California" } }
                     { ShippingLongitude: { ne: null } }
                     { Name: { ne: "Salesforce Bakery" } }
                     { Id: {
