@@ -43,8 +43,7 @@ public class Accounts extends fflib_SObjectDomain {
   }
 
   /**
-   * Enforces "CA" for Shipping State Code.  For a data import it
-   * normalizes "california" (any casing) to "California".
+   * Enforces "CA" for Shipping State Code.
    * Any other value raises a field error.
    */
   private void validateShippingState() {
