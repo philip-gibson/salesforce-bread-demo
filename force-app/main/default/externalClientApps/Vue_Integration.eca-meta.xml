@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ExternalClientApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <contactEmail>philip.j.gibson.artym@gmail.com</contactEmail>
+    <distributionState>Local</distributionState>
+    <infoUrl>https://github.com/philip-gibson/vue-component-demo</infoUrl>
+    <isProtected>false</isProtected>
+    <label>Vue Integration</label>
+    <logoUrl
+  >https://github.com/philip-gibson/salesforce-bread-demo/blob/main/scripts/img/breadAppImage.png</logoUrl>
+    <orgScopedExternalApp>00DRu00000Zr1qK:Vue_Integration</orgScopedExternalApp>
+</ExternalClientApplication>
